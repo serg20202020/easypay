@@ -15,6 +15,12 @@ class InstallController extends AbstractActionController
 {
     public function indexAction()
     {
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $tr = $this->getServiceLocator()->get('translator');
+        
+        $headTitle->append($tr->translate('Installing The EasyPay System'));
+        
+        
         return array();
     }
 
