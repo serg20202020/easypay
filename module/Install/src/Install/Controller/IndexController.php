@@ -11,7 +11,6 @@ namespace Install\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Install\Form\InstallForm;
-use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\Exception\RuntimeException as AdapterRuntimeException;
 use Install\Model\DB;
 
