@@ -1,0 +1,24 @@
+<h4><?php echo $this->translate('Welcome to install UserHub');?></h4>
+<?php
+$form = $this->form;
+$form->get('server')->setLabel($this->translate('Server'));
+$form->get('username')->setLabel($this->translate('Username'));
+$form->get('password')->setLabel($this->translate('Password'));
+$form->get('database')->setLabel($this->translate('Database'));
+$form->get('submit')->setAttributes(array(
+    'value' => $this->translate('Install Now !'),
+    'id' => 'submitbutton',
+));
+$form->setAttribute('action', $this->url('install', array('action' => 'add')));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+
+<div><?php echo $this->formRow($form->get('server')); ?></div>
+<div><?php echo $this->formRow($form->get('username')); ?></div>
+<div><?php echo $this->formRow($form->get('password')); ?></div>
+<div><?php echo $this->formRow($form->get('database')); ?><span><?php echo $this->translate('if it\'s not exsist, we will try to create one.');?></span></div>
+<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+<?php echo $this->form()->closeTag(); ?>

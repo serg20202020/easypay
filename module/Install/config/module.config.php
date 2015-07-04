@@ -2,12 +2,12 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'EasypayInstall\Controller\Install' => 'EasypayInstall\Controller\InstallController',
+            'Install\Controller\Index' => 'Install\Controller\IndexController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'easypay-install' => array(
+            'install' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
@@ -15,8 +15,8 @@ return array(
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
-                        '__NAMESPACE__' => 'EasypayInstall\Controller',
-                        'controller'    => 'Install',
+                        '__NAMESPACE__' => 'Install\Controller',
+                        'controller'    => 'Index',
                         'action'        => 'index',
                     ),
                 ),
@@ -44,7 +44,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'EasypayInstall' => __DIR__ . '/../view',
+            'Install' => __DIR__ . '/../view',
         ),
     ),
     'translator' => array(
