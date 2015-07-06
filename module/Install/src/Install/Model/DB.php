@@ -89,7 +89,7 @@ class DB extends Metadata
     /**
      * Create one table. if it is exsist, check the columns. if the column is exsist, change it's type, else create the column.
      * @param unknown $tableName
-     * @param Ddl\CreateTable $table
+     * @param array $table
      */
     private function create_table( $tableName, $tableStructureData) {
     
@@ -161,20 +161,89 @@ class DB extends Metadata
     private function create_tables() {
         
         // Common columns
-        $COLUMNS['id']      = new Column\Integer('id',FALSE,NULL,array('autoincrement'=>true));
-        $COLUMNS['name']    = new Column\Varchar('name', 255);
-        $COLUMNS['email']    = new Column\Varchar('email', 255);
+        $COLUMNS['id']              = new Column\Integer('id',FALSE,NULL,array('autoincrement'=>true));
+        $COLUMNS['name']            = new Column\Varchar('name', 50);
+        $COLUMNS['merchant_id']     = new Column\Integer('merchant_id',FALSE,NULL);
+        $COLUMNS['price']           = new Column\Floating('price',11,2);
+        $COLUMNS['pay_status']      = new Column\Integer('pay_status',FALSE,0);
+        $COLUMNS['create_time']     = new Column\Datetime('create_time');
+        $COLUMNS['pay_time']        = new Column\Datetime('pay_time');
         
-        // Create table [user].
-        $table_User['column'] = array(
+        // Common constraints
+        $CONSTRAINTS['id_primarykey'] = new Constraint\PrimaryKey('id','id_primarykey');
+        
+        
+        /**
+         * Create table [payment_interface].
+         */
+        $table_PaymentInterface['column'] = array(
             $COLUMNS['id'],
             $COLUMNS['name'],
-            $COLUMNS['email'],
+            new Column\Varchar('merchant_id',50),
+            new Column\Varchar('api_key', 100),
+            new Column\Varchar('account', 50),
+            new Column\Varchar('option', 100),
         );
-        $table_User['constraint'] = array(
-            new Constraint\PrimaryKey('id','id_primarykey')
+        $table_PaymentInterface['constraint'] = array(
+            $CONSTRAINTS['id_primarykey']
         );
-        $this->create_table( 'user', $table_User);
+        $this->create_table( 'payment_interface', $table_PaymentInterface);
+        
+        
+        /**
+         * Create table [trade].
+         */
+        $table_Trade['column'] = array(
+            $COLUMNS['id'],
+            $COLUMNS['merchant_id'],
+            new Column\Varchar('merchant_trade_id', 100),
+            new Column\Varchar('payment_interface_type', 50),
+            new Column\Varchar('payment_interface_trade_id', 100),
+            $COLUMNS['price'],
+            $COLUMNS['pay_status'],
+            $COLUMNS['create_time'],
+            $COLUMNS['pay_time']
+        );
+        $table_Trade['constraint'] = array(
+            $CONSTRAINTS['id_primarykey']
+        );
+        $this->create_table( 'trade', $table_Trade);
+        
+        
+        /**
+         * Create table [withdraw].
+         */
+        $table_Withdraw['column'] = array(
+            $COLUMNS['id'],
+            $COLUMNS['merchant_id'],
+            new Column\Varchar('withdraw_type', 50),
+            new Column\Varchar('withdraw_interface_trade_id', 100),
+            $COLUMNS['price'],
+            $COLUMNS['pay_status'],
+            $COLUMNS['create_time'],
+            $COLUMNS['pay_time']
+        );
+        $table_Withdraw['constraint'] = array(
+            $CONSTRAINTS['id_primarykey']
+        );
+        $this->create_table( 'withdraw', $table_Withdraw);
+        
+        
+        /**
+         * Create table [merchant].
+         */
+        $table_Merchant['column'] = array(
+            $COLUMNS['id'],
+            $COLUMNS['name'],
+            new Column\Varchar('alipay_account',50),
+            new Column\Varchar('bank_account_name', 50),
+            new Column\Varchar('bank_account_card', 50),
+            new Column\Varchar('bank_type', 50),
+        );
+        $table_Merchant['constraint'] = array(
+            $CONSTRAINTS['id_primarykey']
+        );
+        $this->create_table( 'merchant', $table_Merchant);
         
     }
     
