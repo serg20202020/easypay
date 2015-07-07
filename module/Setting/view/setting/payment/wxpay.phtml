@@ -2,4 +2,27 @@
 
 <?php echo $this->paymentMenu; ?>
 
-微信
+<h4><?php echo $this->translate('Setting up the weixin-pay interface.');?></h4>
+<?php
+$form = $this->form;
+$form->get('merchant_id')->setLabel($this->translate('Merchant Id'));
+$form->get('api_key')->setLabel($this->translate('API Key'));
+$form->get('account')->setLabel($this->translate('Account'));
+$form->get('option')->setLabel($this->translate('Option'));
+$form->get('submit')->setAttributes(array(
+    'value' => $this->translate('Save'),
+    'id' => 'submitbutton',
+));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+
+<div><?php echo $this->formRow($form->get('name')); ?></div>
+<div><?php echo $this->formRow($form->get('merchant_id')); ?></div>
+<div><?php echo $this->formRow($form->get('api_key')); ?></div>
+<div><?php echo $this->formRow($form->get('account')); ?></div>
+<div><?php echo $this->formRow($form->get('option')); ?></div>
+<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+<?php echo $this->form()->closeTag(); ?>

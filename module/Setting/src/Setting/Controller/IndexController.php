@@ -20,6 +20,11 @@ class IndexController extends AbstractActionController
      */
     public function indexAction()
     {
+        
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $translator = $this->getServiceLocator()->get('translator');
+        
+        $headTitle->append($translator->translate('Setting up the system.'));
 
         $view_page = new ViewModel();
         $view_menu = new ViewModel();

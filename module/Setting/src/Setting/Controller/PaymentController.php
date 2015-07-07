@@ -11,11 +11,17 @@ namespace Setting\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Setting\Form\PaymentSettingForm;
+use Setting\Model\PaymentInterface;
 
 class PaymentController extends AbstractActionController
 {
     public function indexAction()
     {
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $translator = $this->getServiceLocator()->get('translator');
+        $headTitle->append($translator->translate('Payment interface setting'));
+        
         $view_page = new ViewModel();
         
         $view_page = $this->setChildViews($view_page);
@@ -25,7 +31,31 @@ class PaymentController extends AbstractActionController
 
     public function alipayAction()
     {
-        $view_page = new ViewModel();
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $translator = $this->getServiceLocator()->get('translator');
+        $headTitle->append($translator->translate('Alipay interface setting'));
+        
+        
+        $form = new PaymentSettingForm(PaymentInterface::PAYMENT_TYPE_ALIPAY);
+        
+        $payment_interface = new PaymentInterface(PaymentInterface::PAYMENT_TYPE_ALIPAY,$this->getServiceLocator());
+        $form->bind($payment_interface);
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+        
+            $post_data = $request->getPost();
+        
+            $form->setData($post_data);
+            
+            // Validate the form
+            if ($form->isValid()) {
+                $payment_interface->save();
+            }
+        }
+        
+        
+        $view_page = new ViewModel(array('form'=>$form));
         
         $view_page = $this->setChildViews($view_page);
         
@@ -34,7 +64,31 @@ class PaymentController extends AbstractActionController
     
     public function wxpayAction()
     {
-        $view_page = new ViewModel();
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $translator = $this->getServiceLocator()->get('translator');
+        $headTitle->append($translator->translate('Weixin-pay interface setting'));
+        
+        
+        $form = new PaymentSettingForm(PaymentInterface::PAYMENT_TYPE_WXPAY);
+        
+        $payment_interface = new PaymentInterface(PaymentInterface::PAYMENT_TYPE_WXPAY,$this->getServiceLocator());
+        $form->bind($payment_interface);
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+        
+            $post_data = $request->getPost();
+        
+            $form->setData($post_data);
+            
+            // Validate the form
+            if ($form->isValid()) {
+                $payment_interface->save();
+            }
+        }
+        
+        
+        $view_page = new ViewModel(array('form'=>$form));
         
         $view_page = $this->setChildViews($view_page);
         
