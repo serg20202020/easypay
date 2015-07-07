@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'Setting\Controller\Index' => 'Setting\Controller\IndexController',
             'Setting\Controller\Payment' => 'Setting\Controller\PaymentController',
+            'Setting\Controller\Apikey' => 'Setting\Controller\APIKeyController',
         ),
     ),
     'router' => array(
