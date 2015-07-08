@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Cashier\Controller\Index' => 'Cashier\Controller\IndexController',
+            'Cashier\Controller\Getmerchantid' => 'Cashier\Controller\GetMerchantIDController',
         ),
     ),
     'router' => array(

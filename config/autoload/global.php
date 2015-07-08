@@ -18,4 +18,9 @@ return array(
                      => 'Zend\Db\Adapter\AdapterServiceFactory',
          ),
      ),
+    'view_manager' => array(
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
+    ),
 );

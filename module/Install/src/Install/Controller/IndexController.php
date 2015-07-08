@@ -39,7 +39,7 @@ class IndexController extends AbstractActionController
                 if (empty($post_data->database)) throw new \Exception($translator->translate('Database name has not spacify!'));
                 
                 $db = new DB(array(
-                    'driver' => 'Mysqli',
+                    'driver' => 'Pdo_Mysql',
                     'hostname'=>$post_data->server,
                     'username' => $post_data->username,
                     'password' => $post_data->password,

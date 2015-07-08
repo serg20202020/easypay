@@ -1,1 +1,23 @@
-正在设置API Key
+<?php echo $this->menu; ?>
+
+<?php echo $this->paymentMenu; ?>
+
+<h4><?php echo $this->translate('Setting up the API Key.');?></h4>
+
+<?php
+$form = $this->form;
+$form->get('key')->setLabel($this->translate('API Key'));
+$form->get('submit')->setAttributes(array(
+    'value' => $this->translate('Save'),
+    'id' => 'submitbutton',
+));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+
+<div><?php echo $this->formRow($form->get('key')); ?></div>
+
+<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+<?php echo $this->form()->closeTag(); ?>

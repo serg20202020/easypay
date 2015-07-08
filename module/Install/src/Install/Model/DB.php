@@ -168,6 +168,7 @@ class DB extends Metadata
         $COLUMNS['pay_status']      = new Column\Integer('pay_status',FALSE,0);
         $COLUMNS['create_time']     = new Column\Datetime('create_time');
         $COLUMNS['pay_time']        = new Column\Datetime('pay_time');
+        $COLUMNS['pay_time']->setNullable(true);
         
         // Common constraints
         $CONSTRAINTS['id_primarykey'] = new Constraint\PrimaryKey('id','id_primarykey');
@@ -184,6 +185,7 @@ class DB extends Metadata
             new Column\Varchar('account', 50),
             new Column\Varchar('option', 100),
         );
+        $table_PaymentInterface['column'][5]->setNullable(true);
         $table_PaymentInterface['constraint'] = array(
             $CONSTRAINTS['id_primarykey']
         );
@@ -204,6 +206,8 @@ class DB extends Metadata
             $COLUMNS['create_time'],
             $COLUMNS['pay_time']
         );
+        $table_Trade['column'][3]->setNullable(true);
+        $table_Trade['column'][4]->setNullable(true);
         $table_Trade['constraint'] = array(
             $CONSTRAINTS['id_primarykey']
         );
@@ -223,6 +227,8 @@ class DB extends Metadata
             $COLUMNS['create_time'],
             $COLUMNS['pay_time']
         );
+        $table_Withdraw['column'][2]->setNullable(true);
+        $table_Withdraw['column'][3]->setNullable(true);
         $table_Withdraw['constraint'] = array(
             $CONSTRAINTS['id_primarykey']
         );
@@ -240,6 +246,10 @@ class DB extends Metadata
             new Column\Varchar('bank_account_card', 50),
             new Column\Varchar('bank_type', 50),
         );
+        $table_Merchant['column'][2]->setNullable(true);
+        $table_Merchant['column'][3]->setNullable(true);
+        $table_Merchant['column'][4]->setNullable(true);
+        $table_Merchant['column'][5]->setNullable(true);
         $table_Merchant['constraint'] = array(
             $CONSTRAINTS['id_primarykey']
         );
