@@ -17,7 +17,7 @@ class BaseController extends AbstractActionController
      * Verify the request by the apikey.
      * @return boolean
      */
-    protected function verifyRequest(&$maded_sign)
+    protected function verifyRequest(&$maded_sign = NULL)
     {
        $config = $this->getServiceLocator()->get('Config');
        

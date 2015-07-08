@@ -201,6 +201,8 @@ class DB extends Metadata
             new Column\Varchar('merchant_trade_id', 100),
             new Column\Varchar('payment_interface_type', 50),
             new Column\Varchar('payment_interface_trade_id', 100),
+            new Column\Varchar('redirect_url', 255),
+            new Column\Varchar('notify_url', 255),
             $COLUMNS['price'],
             $COLUMNS['pay_status'],
             $COLUMNS['create_time'],
