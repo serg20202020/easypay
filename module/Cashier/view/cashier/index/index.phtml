@@ -1,1 +1,28 @@
-<p>You are going to pay ￥<span>345.4</span> to the merchant.</p>
+<p>You are going to pay ￥<span><?php echo $this->price; ?></span> to the merchant.</p>
+
+
+<h4>Please select the payment method:</h4>
+
+
+
+<p><label><input type="radio" name="payment_method" value="alipay">Alipay</label></p>
+<p><label><input type="radio" name="payment_method" value="wechatpay">Wechatpay</label></p>
+<p><label><input type="radio" name="payment_method" value="bankcard">Bank Card</label></p>
+
+
+<p><input type="button" id="pay_btn" value="Pay Now !"></p>
+
+
+<script type="text/javascript">
+$(document).ready(function($){
+	$("#pay_btn").click(function(){
+
+		var payment_method = $('input:radio[name=payment_method]:checked').val();
+
+		<?php /* Save the payment_method to DB  */ ?>
+
+		$.post()
+		
+	});
+});
+</script>
