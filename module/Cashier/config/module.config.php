@@ -39,6 +39,20 @@ return array(
                             ),
                         ),
                     ),
+                    'setpayment' => array(
+                        'type'    => 'Literal',
+                        'options' => array(
+                            // Change this to something specific to your module
+                            'route'    => '/setpayment',
+                            'defaults' => array(
+                                // Change this value to reflect the namespace in which
+                                // the controllers for your module are found
+                                '__NAMESPACE__' => 'Cashier\Controller',
+                                'controller'    => 'Index',
+                                'action'        => 'setpayment',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

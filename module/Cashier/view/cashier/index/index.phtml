@@ -5,9 +5,21 @@
 
 
 
-<p><label><input type="radio" name="payment_method" value="alipay">Alipay</label></p>
-<p><label><input type="radio" name="payment_method" value="wechatpay">Wechatpay</label></p>
-<p><label><input type="radio" name="payment_method" value="bankcard">Bank Card</label></p>
+<p><label><input type="radio" name="payment_method" value="alipay"<?php 
+if (empty($this->selected_payment) || $this->selected_payment == 'alipay'){
+    echo ' checked';
+}
+?>>Alipay</label></p>
+<p><label><input type="radio" name="payment_method" value="wechatpay"<?php 
+if ($this->selected_payment == 'wxpay'){
+    echo ' checked';
+}
+?>>Wechatpay</label></p>
+<p><label><input type="radio" name="payment_method" value="bankcard"<?php 
+if ($this->selected_payment == 'bankcard'){
+    echo ' checked';
+}
+?>>Bank Card</label></p>
 
 
 <p><input type="button" id="pay_btn" value="Pay Now !"></p>
@@ -17,11 +29,19 @@
 $(document).ready(function($){
 	$("#pay_btn").click(function(){
 
+		this.value = 'Please wait ...';
+		$(this).attr('disabled','true');
+
 		var payment_method = $('input:radio[name=payment_method]:checked').val();
 
 		<?php /* Save the payment_method to DB  */ ?>
 
-		$.post()
+		$.post('<?php echo $this->url('cashier/setpayment') ?>',{merchant:<?php echo $this->merchant; ?>,trade:'<?php echo $this->trade; ?>',payment_method:payment_method},function(data){
+			console.log(data);
+
+			// Redirect to the selected PayInterface gateway.
+			
+		},'json');
 		
 	});
 });
