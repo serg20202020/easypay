@@ -40,8 +40,13 @@ $(document).ready(function($){
 			console.log(data);
 
 			// Redirect to the selected PayInterface gateway.
+			if (data.status == 'true'){
+				var href_tpl = '<?php echo $this->url('cashier/gateway',array('action'=>'gate_type')) ?>';
+				var href = href_tpl.replace('gate_type',data.interface);
+				location.href = href;
+			}
 			
-		},'json');
+		});
 		
 	});
 });

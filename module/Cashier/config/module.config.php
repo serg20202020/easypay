@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'Cashier\Controller\Index' => 'Cashier\Controller\IndexController',
             'Cashier\Controller\Getmerchantid' => 'Cashier\Controller\GetMerchantIDController',
+            'Cashier\Controller\PayGateway' => 'Cashier\Controller\PayGatewayController',
         ),
     ),
     'router' => array(
@@ -50,6 +51,19 @@ return array(
                                 '__NAMESPACE__' => 'Cashier\Controller',
                                 'controller'    => 'Index',
                                 'action'        => 'setpayment',
+                            ),
+                        ),
+                    ),
+                    'gateway' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/gateway/:action',
+                            'constraints' => array(
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Cashier\Controller',
+                                'controller'    => 'PayGateway'
                             ),
                         ),
                     ),
