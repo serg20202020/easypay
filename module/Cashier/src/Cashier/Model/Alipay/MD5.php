@@ -40,5 +40,4 @@ function md5Verify($prestr, $sign, $key) {
 		return false;
 	}
 }
-
 ?>

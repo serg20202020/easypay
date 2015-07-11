@@ -67,6 +67,17 @@ return array(
                             ),
                         ),
                     ),
+                    'cancel' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/cancel',
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Cashier\Controller',
+                                'controller'    => 'PayGateway',
+                                'action'     => 'cancel',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

@@ -9,17 +9,12 @@
 if (empty($this->selected_payment) || $this->selected_payment == 'alipay'){
     echo ' checked';
 }
-?>>Alipay</label></p>
+?>>Alipay(Suport BandCard Payment.)</label></p>
 <p><label><input type="radio" name="payment_method" value="wechatpay"<?php 
 if ($this->selected_payment == 'wxpay'){
     echo ' checked';
 }
 ?>>Wechatpay</label></p>
-<p><label><input type="radio" name="payment_method" value="bankcard"<?php 
-if ($this->selected_payment == 'bankcard'){
-    echo ' checked';
-}
-?>>Bank Card</label></p>
 
 
 <p><input type="button" id="pay_btn" value="Pay Now !"></p>
@@ -36,17 +31,26 @@ $(document).ready(function($){
 
 		<?php /* Save the payment_method to DB  */ ?>
 
-		$.post('<?php echo $this->url('cashier/setpayment') ?>',{merchant:<?php echo $this->merchant; ?>,trade:'<?php echo $this->trade; ?>',payment_method:payment_method},function(data){
-			console.log(data);
+		$.ajax({
+			   type: "POST",
+			   dataType:"json",
+			   url: "<?php echo $this->url('cashier/setpayment') ?>",
+			   data: {merchant:<?php echo $this->merchant; ?>,trade:'<?php echo $this->trade; ?>',payment_method:payment_method},
+			   success:function(data){
+					console.log(data);
 
-			// Redirect to the selected PayInterface gateway.
-			if (data.status == 'true'){
-				var href_tpl = '<?php echo $this->url('cashier/gateway',array('action'=>'gate_type')) ?>';
-				var href = href_tpl.replace('gate_type',data.interface);
-				location.href = href;
-			}
-			
-		});
+					// Redirect to the selected PayInterface gateway.
+					if (data.status == 'true'){
+						var href_tpl = '<?php echo $this->url('cashier/gateway',array('action'=>'gate_type')) ?>';
+						var href = href_tpl.replace('gate_type',data.interface);
+						location.href = href;
+					}
+					
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					console.log(XMLHttpRequest, textStatus, errorThrown);
+				}
+			});
 		
 	});
 });

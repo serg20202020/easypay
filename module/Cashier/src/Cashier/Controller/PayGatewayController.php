@@ -3,6 +3,7 @@ namespace Cashier\Controller;
 
 use Zend\View\Model\ViewModel;
 use Cashier\Model\Alipay\AlipaySubmit;
+use Setting\Model\PaymentInterface;
 
 /**
  * PayGatewayController
@@ -24,48 +25,49 @@ class PayGatewayController extends BaseController
         /**
          * Get the trade info data.
          */
-        session_start();
-        print_r($_SESSION);
+        @session_start();
+        print_r($_SESSION['paying_trade']);
+        $paying_trade = $_SESSION['paying_trade'];
         
         /**
          * Get the configuration of alipay payment interface.
          */
-        
-        return new ViewModel();
+        $PaymentInterface = new PaymentInterface(PaymentInterface::PAYMENT_TYPE_ALIPAY, $this->getServiceLocator());
+        print_r($PaymentInterface->getArrayCopy());
         
         //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         //合作身份者id，以2088开头的16位纯数字
-        $alipay_config['partner']		= '';
+        $alipay_config['partner']		= $PaymentInterface->merchant_id;
         
         //收款支付宝帐户
-        $alipay_config['seller_email']	= '';
+        $alipay_config['seller_email']	= $PaymentInterface->account;
         
         //安全检验码，以数字和字母组成的32位字符
         //如果签名方式设置为“MD5”时，请设置该参数
-        $alipay_config['key']			= '';
+        $alipay_config['key']			= $PaymentInterface->api_key;
         
         
         //商户的私钥（后缀是.pem）文件相对路径
         //如果签名方式设置为“0001”时，请设置该参数
-        $alipay_config['private_key_path']	= 'key/rsa_private_key.pem';
+        $alipay_config['private_key_path']	= 'data/alipay/key/rsa_private_key.pem';
         
         //支付宝公钥（后缀是.pem）文件相对路径
         //如果签名方式设置为“0001”时，请设置该参数
-        $alipay_config['ali_public_key_path']= 'key/alipay_public_key.pem';
+        $alipay_config['ali_public_key_path']= 'data/alipay/key/alipay_public_key.pem';
         
         
         //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         
         
         //签名方式 不需修改
-        $alipay_config['sign_type']    = '0001';
+        $alipay_config['sign_type']    = 'MD5';
         
         //字符编码格式 目前支持 gbk 或 utf-8
         $alipay_config['input_charset']= 'utf-8';
         
         //ca证书路径地址，用于curl中ssl校验
         //请保证cacert.pem文件在当前文件夹目录中
-        $alipay_config['cacert']    = getcwd().'\\cacert.pem';
+        $alipay_config['cacert']    = 'data/alipay/cacert/cacert.pem';
         
         //访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
         $alipay_config['transport']    = 'http';
@@ -87,27 +89,27 @@ class PayGatewayController extends BaseController
         //**req_data详细信息**
         
         //服务器异步通知页面路径
-        $notify_url = $this->url('cashier/gateway_alipay/notify');
+        $notify_url = $this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_notify'));
         //需http://格式的完整路径，不允许加?id=123这类自定义参数
         
         //页面跳转同步通知页面路径
-        $call_back_url = $this->url('cashier/gateway_alipay/redirect');
+        $call_back_url = $this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_redirect'));
         //需http://格式的完整路径，不允许加?id=123这类自定义参数
         
         //操作中断返回地址
-        $merchant_url = $this->url('cashier/fail');
+        $merchant_url = $this->url()->fromRoute('cashier/cancel');
         //用户付款中途退出返回商户的地址。需http://格式的完整路径，不允许加?id=123这类自定义参数
         
         //商户订单号
-        $out_trade_no = $_POST['WIDout_trade_no'];
+        $out_trade_no = $paying_trade['merchant_trade_id'];
         //商户网站订单系统中唯一订单号，必填
         
         //订单名称
-        $subject = $_POST['WIDsubject'];
+        $subject = '商户订单【'.$paying_trade['merchant_trade_id'].'】';
         //必填
         
         //付款金额
-        $total_fee = $_POST['WIDtotal_fee'];
+        $total_fee = $paying_trade['price'];
         //必填
         
         //请求业务参数详细
@@ -164,6 +166,6 @@ class PayGatewayController extends BaseController
         $alipaySubmit = new AlipaySubmit($alipay_config);
         $html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
         
-        return new ViewModel('redirect_script',$html_text);
+        return new ViewModel(array('redirect_script'=>$html_text));
     }
 }
