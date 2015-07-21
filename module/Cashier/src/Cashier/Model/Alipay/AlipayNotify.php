@@ -1,6 +1,10 @@
 <?php
 namespace Cashier\Model\Alipay;
 
+require_once("Core.php");
+require_once("RSA.php");
+require_once("MD5.php");
+
 /* *
  * 类名：AlipayNotify
  * 功能：支付宝通知处理类
@@ -51,7 +55,7 @@ class AlipayNotify {
 			}
 			
 			//notify_id从decrypt_post_para中解析出来（也就是说decrypt_post_para中已经包含notify_id的内容）
-			$doc = new DOMDocument();
+			$doc = new \DOMDocument();
 			$doc->loadXML($decrypt_post_para['notify_data']);
 			$notify_id = $doc->getElementsByTagName( "notify_id" )->item(0)->nodeValue;
 			

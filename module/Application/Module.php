@@ -11,6 +11,9 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Permissions\Acl\Acl;
+use Application\Role;
+use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
 class Module
 {
@@ -33,6 +36,54 @@ class Module
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Zend\Permissions\Acl\Acl' => function ($sm) {
+                    
+                    $acl = new Acl();
+                    
+                    $guest = new Role\Guest();
+                    $client = new Role\Client();
+                    $merchant = new Role\Merchant();
+                    $staff = new Role\Staff();
+                    $adminitrator = new Role\Adminitrator();
+                    
+                    $acl->addRole($guest)
+                        ->addRole($client)
+                        ->addRole($merchant)
+                        ->addRole($staff)
+                        ->addRole($adminitrator);
+                    
+                    
+                    $SettingControllerIndex = new Resource('Setting\Controller\IndexController');
+                    $acl->addResource($SettingControllerIndex);
+                    
+                    $acl->allow($guest,$SettingControllerIndex,'sdf');
+                    
+                    return $acl;
+                },
+                'Acl' => function ($sm) {
+                    return function ($resouce,$privilege=null) use($sm){
+                        $acl = $sm->get('Zend\Permissions\Acl\Acl');
+                        $role = $sm->get('GetCurrentRole');
+                        
+                        $allow = $acl->isAllowed($role, $resouce, $privilege );
+                        
+                        if ($allow) return true;
+                        else{
+                            throw new \Exception('No Permissions !');
+                        }
+                    };
+                },
+                'GetCurrentRole' => function(){
+                    return new Role\Guest();
+                }
             ),
         );
     }

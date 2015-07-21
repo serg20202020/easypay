@@ -20,18 +20,23 @@ class IndexController extends AbstractActionController
      */
     public function indexAction()
     {
-        
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        
-        $headTitle->append($translator->translate('Setting up the system.'));
+        $Acl = $this->getServiceLocator()->get('Acl');
 
-        $view_page = new ViewModel();
-        $view_menu = new ViewModel();
-        $view_menu->setTemplate('setting/common/menu');
-        $view_page->addChild($view_menu,'menu');
-        
-        return $view_page;
+        if ($Acl( __CLASS__,'indexf')){
+            
+            $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+            $translator = $this->getServiceLocator()->get('translator');
+            
+            $headTitle->append($translator->translate('Setting up the system.'));
+            
+            $view_page = new ViewModel();
+            $view_menu = new ViewModel();
+            $view_menu->setTemplate('setting/common/menu');
+            $view_page->addChild($view_menu,'menu');
+            
+            return $view_page;
+            
+        }
         
     }
 }
