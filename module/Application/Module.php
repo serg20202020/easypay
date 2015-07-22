@@ -64,7 +64,7 @@ class Module
                     $SettingControllerIndex = new Resource('Setting\Controller\IndexController');
                     $acl->addResource($SettingControllerIndex);
                     
-                    $acl->allow($guest,$SettingControllerIndex,'sdf');
+                    $acl->allow($guest,$SettingControllerIndex,'index');
                     
                     return $acl;
                 },
@@ -77,7 +77,8 @@ class Module
                         
                         if ($allow) return true;
                         else{
-                            throw new \Exception('No Permissions !');
+                            throw new Role\NoPermissionsException();
+                            
                         }
                     };
                 },
