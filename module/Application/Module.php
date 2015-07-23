@@ -15,6 +15,7 @@ use Zend\Permissions\Acl\Acl;
 use Application\Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 use Zend\Authentication\AuthenticationService;
+use Zend\Config\Config;
 
 class Module
 {
@@ -81,6 +82,8 @@ class Module
                     $acl->allow($adminitrator,'Setting\Controller\BaseSettingController');
                     $acl->allow($adminitrator,'Install\Controller\IndexController');
                     
+                    if (!$sm->get('SiteIsInstalled')) $acl->allow($guest,'Install\Controller\IndexController');
+                    
                     return $acl;
                 },
                 'Acl' => function ($sm) {
@@ -110,7 +113,16 @@ class Module
                     }
                     
                     return $role;
+                },
+                'SiteIsInstalled'=> function (){
+                    $config_file = 'config/autoload/local.php';
+                    if (file_exists($config_file)) $config = include $config_file;
+                    
+                    $reader = new Config($config);
+                    if (!empty($reader->db)) return true;
+                    else return false;
                 }
+                
             ),
         );
     }
