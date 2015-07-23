@@ -1,7 +1,7 @@
 <?php
 namespace Merchant\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\AclController;
 
 
 /**
@@ -12,14 +12,7 @@ use Zend\Mvc\Controller\AbstractActionController;
  * @version
  *
  */
-class BaseController extends AbstractActionController
+class BaseController extends AclController
 {
-    function __construct() {
-        //parent::__construct();
-        
-        @session_start();
-        echo 'This will check if logined.';
-        print_r($_SERVER);
-        
-    }
+    public $AclResourceName = __CLASS__;
 }

@@ -72,6 +72,8 @@ class Module
                     array_push($ControllerResource, new Resource('Setting\Controller\BaseSettingController'));
                     array_push($ControllerResource, new Resource('Install\Controller\IndexController'));
                     array_push($ControllerResource, new Resource('Workbench\Controller\BaseController'));
+                    array_push($ControllerResource, new Resource('Merchant\Controller\BaseController'));
+                    array_push($ControllerResource, new Resource('Cashier\Controller\BaseController'));
                     
                     foreach ($ControllerResource as $resource){
                         $acl->addResource($resource);
@@ -86,6 +88,9 @@ class Module
                     
                     $acl->allow($staff,'Workbench\Controller\BaseController');
                     
+                    $acl->allow($client,'Merchant\Controller\BaseController');
+                    
+                    $acl->allow($guest,'Cashier\Controller\BaseController');
                     if (!$sm->get('SiteIsInstalled')) $acl->allow($guest,'Install\Controller\IndexController');
                     
                     return $acl;

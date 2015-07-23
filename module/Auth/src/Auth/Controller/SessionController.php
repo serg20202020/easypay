@@ -79,10 +79,6 @@ class SessionController extends AbstractActionController
             
         }
         
-        
-
-        
-        
         $view_page = new ViewModel($vars);
         
         return $view_page;

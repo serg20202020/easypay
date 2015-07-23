@@ -1,7 +1,7 @@
 <?php
 namespace Cashier\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\AclController;
 
 /**
  * BaseController
@@ -11,8 +11,10 @@ use Zend\Mvc\Controller\AbstractActionController;
  * @version
  *
  */
-class BaseController extends AbstractActionController
+class BaseController extends AclController
 {
+    public $AclResourceName = __CLASS__;
+    
     /**
      * Verify the request by the apikey.
      * @return boolean
