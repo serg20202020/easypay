@@ -39,6 +39,8 @@ class DB extends Metadata
         
         $this->create_tables();
         
+        $this->insert_rows();
+        
     }
     
     private function create_database() {
@@ -256,6 +258,76 @@ class DB extends Metadata
             $CONSTRAINTS['id_primarykey']
         );
         $this->create_table( 'merchant', $table_Merchant);
+        
+        /**
+         * Create table [account].
+         */
+        $table_Account['column'] = array(
+            $COLUMNS['id'],
+            new Column\Varchar('username',50),
+            new Column\Varchar('password',50),
+            new Column\Datetime('last_login_time')
+        );
+        $table_Account['column'][3]->setNullable(true);
+        $table_Account['constraint'] = array(
+            $CONSTRAINTS['id_primarykey']
+        );
+        $this->create_table( 'account', $table_Account);
+        
+        
+    }
+    
+    /**
+     * Insert the base data rows.
+     */
+    private function insert_rows() {
+        
+        $adapter = $this->adapter;
+        $sql = new Sql($adapter);
+        
+        $validator = new \Zend\Validator\Db\RecordExists(
+            array(
+                'table'   => 'account',
+                'field'   => 'username',
+                'adapter' => $adapter
+            )
+        );
+        
+        $account_rows = array();
+        
+        if (!$validator->isValid('Administrator')) {
+            array_push($account_rows,array(
+                'username'=>'Administrator',
+                'password'=>md5('Administrator')
+            ));
+        }
+        
+        if (!$validator->isValid('Staff')) {
+            array_push($account_rows,array(
+                'username'=>'Staff',
+                'password'=>md5('StaffStaff')
+            ));
+        }
+        
+        if (!empty($account_rows)){
+            
+            $insert = $sql->insert('account');
+            $insert->columns(array('username','password'));
+            
+            foreach ($account_rows as $account_rows_row){
+                
+                $insert->values($account_rows_row);
+                
+                $statement = $sql->prepareStatementForSqlObject($insert);
+                
+                $results = $statement->execute();
+                
+                if ($results->getAffectedRows() != 1) throw new \Zend\Db\Exception\ErrorException();
+                
+            }
+            
+        }
+        
         
     }
     
