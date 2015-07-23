@@ -55,17 +55,31 @@ class Module
                     $staff = new Role\Staff();
                     $adminitrator = new Role\Adminitrator();
                     
+                    /**
+                     * Define Roles
+                     */
                     $acl->addRole($guest)
                         ->addRole($client)
                         ->addRole($merchant)
                         ->addRole($staff)
                         ->addRole($adminitrator);
                     
+                    /**
+                     * Define Resources
+                     */
+                    $ControllerResource = array();
+                    array_push($ControllerResource, new Resource('Setting\Controller\BaseSettingController'));
+                    array_push($ControllerResource, new Resource('Install\Controller\IndexController'));
                     
-                    $BaseSettingController = new Resource('Setting\Controller\BaseSettingController');
-                    $acl->addResource($BaseSettingController);
+                    foreach ($ControllerResource as $resource){
+                        $acl->addResource($resource);
+                    }
                     
-                    $acl->allow($adminitrator,$BaseSettingController);
+                    /**
+                     * Assigning permissions
+                     */
+                    $acl->allow($adminitrator,'Setting\Controller\BaseSettingController');
+                    $acl->allow($adminitrator,'Install\Controller\IndexController');
                     
                     return $acl;
                 },

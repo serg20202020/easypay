@@ -9,14 +9,16 @@
 
 namespace Install\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Application\Controller\AclController;
 use Install\Form\InstallForm;
 use Zend\Db\Adapter\Exception\RuntimeException as AdapterRuntimeException;
 use Install\Model\DB;
 
 
-class IndexController extends AbstractActionController
+class IndexController extends AclController
 {
+    public $AclResourceName = __CLASS__;
+    
     public function indexAction()
     {
         $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');

@@ -1,8 +1,8 @@
 <?php
 namespace Setting\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Controller\AclController;
 
 /**
  * BaseSettingController
@@ -12,13 +12,9 @@ use Zend\View\Model\ViewModel;
  * @version
  *
  */
-class BaseSettingController extends AbstractActionController
+class BaseSettingController extends AclController
 {
-    public function onDispatch(\Zend\Mvc\MvcEvent $e){
-        $Acl = $this->getServiceLocator()->get('Acl');
-        $Acl( __CLASS__);
-        return parent::onDispatch($e);
-    }
+    public $AclResourceName = __CLASS__;
     
     protected function setChildViews(ViewModel $view_page) {
     
