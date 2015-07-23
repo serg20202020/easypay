@@ -25,52 +25,62 @@ class SessionController extends AbstractActionController
         
         
         $form = new LoginForm();
-        $vars = array('form'=>$form);
+        $vars = array();
         
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-        
-            $post_data = $request->getPost();
-        
-            $form->setData($post_data);
-        
-            // Validate the form
-            if ($form->isValid()) {
-                // Authentication ...
-                
-                $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-                
-                // Configure the instance with constructor parameters...
-                $authAdapter = new AuthAdapter($dbAdapter,
-                    'account',
-                    'username',
-                    'password',
-                    'MD5(?)'
-                );
-                
-                // Set the input credential values (e.g., from a login form)
-                $data = $form->getData();
-                $authAdapter
-                    ->setIdentity($data['username'])
-                    ->setCredential($data['password'])
-                ;
-                
-                $auth = new AuthenticationService();
-                $result = $auth->authenticate($authAdapter);
-                $vars['result'] = $result;
-                
-                if (!$result->isValid()) {
-                    // Authentication failed;
-                    
-                } else {
-                    // Authentication succeeded; the identity ($username) is stored
-                    // in the session
-                    // $result->getIdentity() === $auth->getIdentity()
-                    // $result->getIdentity() === $username
-                    
+        $auth = new AuthenticationService();
+        if (!$auth->hasIdentity()){
+            
+            $vars['form']= $form;
+            
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+            
+                $post_data = $request->getPost();
+            
+                $form->setData($post_data);
+            
+                // Validate the form
+                if ($form->isValid()) {
+                    // Authentication ...
+            
+                    $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+            
+                    // Configure the instance with constructor parameters...
+                    $authAdapter = new AuthAdapter($dbAdapter,
+                        'account',
+                        'username',
+                        'password',
+                        'MD5(?)'
+                    );
+            
+                    // Set the input credential values (e.g., from a login form)
+                    $data = $form->getData();
+                    $authAdapter
+                        ->setIdentity($data['username'])
+                        ->setCredential($data['password'])
+                    ;
+            
+                    $auth = new AuthenticationService();
+                    $result = $auth->authenticate($authAdapter);
+                    $vars['result'] = $result;
+            
+                    if (!$result->isValid()) {
+                        // Authentication failed;
+            
+                    } else {
+                        // Authentication succeeded; the identity ($username) is stored
+                        // in the session
+                        // $result->getIdentity() === $auth->getIdentity()
+                        // $result->getIdentity() === $username
+                        return $this->redirect()->toRoute('auth');
+                    }
                 }
             }
+            
         }
+        
+        
+
         
         
         $view_page = new ViewModel($vars);
@@ -84,6 +94,6 @@ class SessionController extends AbstractActionController
         
         $auth->clearIdentity();
         
-        return array();
+        return array('status'=>$auth->hasIdentity());
     }
 }

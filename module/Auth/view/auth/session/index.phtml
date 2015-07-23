@@ -1,6 +1,10 @@
-
-<h4><?php echo $this->translate('Please Login !');?></h4>
 <?php
+if (empty($this->form)){
+?>
+    <h4><?php echo $this->translate('You had Logined ! do not perform this again.');?></h4>
+<?php  
+}else{
+
 $form = $this->form;
 $form->get('username')->setLabel($this->translate('Username'));
 $form->get('password')->setLabel($this->translate('Password'));
@@ -14,6 +18,7 @@ if (!empty($this->result)) print_r($this->result);
 
 echo $this->form()->openTag($form);
 ?>
+<h4><?php echo $this->translate('Please Login !');?></h4>
 
 <div><?php echo $this->formRow($form->get('username')); ?></div>
 <div><?php echo $this->formRow($form->get('password')); ?></div>
@@ -21,3 +26,5 @@ echo $this->form()->openTag($form);
 <div><?php echo $this->formSubmit($form->get('submit')); ?></div>
 
 <?php echo $this->form()->closeTag(); ?>
+
+<?php } ?>

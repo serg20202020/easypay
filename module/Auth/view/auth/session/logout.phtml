@@ -1,3 +1,4 @@
-<strong>Module:</strong>        Auth &raquo;
-<strong>Controller:</strong>    Session &raquo;
-<strong>Action:</strong>        foo
+<?php 
+if (!$this->status) echo $this->translate('You had logouted !');
+else  echo $this->translate('Sorry ! Logoutting does not work, you still in the session now.');
+?>
