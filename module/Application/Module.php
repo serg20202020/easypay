@@ -122,8 +122,9 @@ class Module
                     }else{
                         
                         // Client
-                        $MerchantID = $sm->get('GetClientMerchantID');
-                        if ($MerchantID) {
+                        $GetClientMerchantID = $sm->get('GetClientMerchantID');
+                        $MerchantID = $GetClientMerchantID();
+                        if ($MerchantID!==null) {
                             $role = new Role\Client();
                         }
                         
@@ -134,20 +135,25 @@ class Module
                 
                 'GetClientMerchantID'=>function ($sm){
                     
-                    $MerchantID = null;
-                    
-                    $config = $sm->get('Config');
-                    
-                    if (!empty($config['ClientSessionName'])){
+                    return function () use($sm){
                         
-                        @session_start();
-                        if (!empty($_SESSION[$config['ClientSessionName']])){
-                            $MerchantID = $_SESSION[$config['ClientSessionName']];
+                        $MerchantID = null;
+                        
+                        $config = $sm->get('Config');
+                        
+                        if (!empty($config['ClientSessionName'])){
+                        
+                            @session_start();
+                            if (!empty($_SESSION[$config['ClientSessionName']])){
+                                $MerchantID = $_SESSION[$config['ClientSessionName']];
+                            }
+                        
                         }
                         
-                    }
+                        return $MerchantID;
+                        
+                    };
                     
-                    return $MerchantID;
                 },
                 
                 'SiteIsInstalled'=> function (){
