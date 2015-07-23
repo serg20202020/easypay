@@ -12,6 +12,8 @@ namespace Auth\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Auth\Form\LoginForm;
+use Zend\Authentication\Adapter\DbTable as AuthAdapter;
+use Zend\Authentication\AuthenticationService;
 
 class SessionController extends AbstractActionController
 {
@@ -23,10 +25,7 @@ class SessionController extends AbstractActionController
         
         
         $form = new LoginForm();
-        
-        /*
-        $payment_interface = new PaymentInterface(PaymentInterface::PAYMENT_TYPE_ALIPAY,$this->getServiceLocator());
-        $form->bind($payment_interface);*/
+        $vars = array('form'=>$form);
         
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -37,20 +36,54 @@ class SessionController extends AbstractActionController
         
             // Validate the form
             if ($form->isValid()) {
-                //$payment_interface->save();
+                // Authentication ...
+                
+                $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+                
+                // Configure the instance with constructor parameters...
+                $authAdapter = new AuthAdapter($dbAdapter,
+                    'account',
+                    'username',
+                    'password',
+                    'MD5(?)'
+                );
+                
+                // Set the input credential values (e.g., from a login form)
+                $data = $form->getData();
+                $authAdapter
+                    ->setIdentity($data['username'])
+                    ->setCredential($data['password'])
+                ;
+                
+                $auth = new AuthenticationService();
+                $result = $auth->authenticate($authAdapter);
+                $vars['result'] = $result;
+                
+                if (!$result->isValid()) {
+                    // Authentication failed;
+                    
+                } else {
+                    // Authentication succeeded; the identity ($username) is stored
+                    // in the session
+                    // $result->getIdentity() === $auth->getIdentity()
+                    // $result->getIdentity() === $username
+                    
+                }
             }
         }
         
         
-        $view_page = new ViewModel(array('form'=>$form));
+        $view_page = new ViewModel($vars);
         
         return $view_page;
     }
 
-    public function fooAction()
+    public function logoutAction()
     {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /session/session/foo
+        $auth = new AuthenticationService();
+        
+        $auth->clearIdentity();
+        
         return array();
     }
 }

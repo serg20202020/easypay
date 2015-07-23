@@ -10,6 +10,7 @@ $form->get('submit')->setAttributes(array(
 ));
 $form->prepare();
 
+if (!empty($this->result)) print_r($this->result);
 
 echo $this->form()->openTag($form);
 ?>

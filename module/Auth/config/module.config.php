@@ -38,6 +38,20 @@ return array(
                             ),
                         ),
                     ),
+                    'logout' => array(
+                        'type'    => 'Literal',
+                        'options' => array(
+                            // Change this to something specific to your module
+                            'route'    => '/logout',
+                            'defaults' => array(
+                                // Change this value to reflect the namespace in which
+                                // the controllers for your module are found
+                                '__NAMESPACE__' => 'Auth\Controller',
+                                'controller'    => 'Session',
+                                'action'        => 'logout',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

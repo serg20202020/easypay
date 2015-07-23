@@ -14,6 +14,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\Permissions\Acl\Acl;
 use Application\Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
+use Zend\Authentication\AuthenticationService;
 
 class Module
 {
@@ -22,6 +23,19 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        
+        $auth = new AuthenticationService();
+        
+        
+        if ($auth->hasIdentity()) {
+        
+            $identity = $auth->getIdentity();
+            echo $identity;
+            print_r($_SESSION);
+        
+        }else{
+            echo '没有登录';
+        }
     }
 
     public function getConfig()
@@ -83,7 +97,18 @@ class Module
                     };
                 },
                 'GetCurrentRole' => function(){
-                    return new Role\Guest();
+                    
+                    $role = new Role\Guest();
+                    
+                    $auth = new AuthenticationService();
+                    if ($auth->hasIdentity()) {
+                        
+                        if ($auth->getIdentity() === 'Administrator') $role = new Role\Adminitrator();
+                        elseif ($auth->getIdentity() === 'Staff') $role = new Role\Staff();
+                        
+                    }
+                    
+                    return $role;
                 }
             ),
         );
