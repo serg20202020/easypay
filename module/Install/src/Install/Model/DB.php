@@ -305,7 +305,7 @@ class DB extends Metadata
         if (!$validator->isValid('Staff')) {
             array_push($account_rows,array(
                 'username'=>'Staff',
-                'password'=>md5('StaffStaff')
+                'password'=>md5('StaffStaffStaff')
             ));
         }
         

@@ -1,7 +1,6 @@
 <?php
 namespace Setting\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -12,7 +11,7 @@ use Zend\View\Model\ViewModel;
  * @version
  *
  */
-class IndexController extends AbstractActionController
+class IndexController extends BaseSettingController
 {
 
     /**
@@ -20,8 +19,6 @@ class IndexController extends AbstractActionController
      */
     public function indexAction()
     {
-        $Acl = $this->getServiceLocator()->get('Acl');
-        $Acl( __CLASS__,'index');
             
         $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
         $translator = $this->getServiceLocator()->get('translator');
@@ -29,9 +26,7 @@ class IndexController extends AbstractActionController
         $headTitle->append($translator->translate('Setting up the system.'));
         
         $view_page = new ViewModel();
-        $view_menu = new ViewModel();
-        $view_menu->setTemplate('setting/common/menu');
-        $view_page->addChild($view_menu,'menu');
+        $this->setChildViews($view_page);
         
         return $view_page;
     }

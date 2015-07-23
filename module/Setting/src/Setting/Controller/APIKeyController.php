@@ -1,7 +1,7 @@
 <?php
 namespace Setting\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+
 use Zend\View\Model\ViewModel;
 use Setting\Form\APIKeySettingForm;
 use Zend\Config\Config;
@@ -14,7 +14,7 @@ use Zend\Config\Config;
  * @version
  *
  */
-class APIKeyController extends AbstractActionController
+class APIKeyController extends BaseSettingController
 {
 
     /**

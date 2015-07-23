@@ -23,19 +23,6 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        
-        $auth = new AuthenticationService();
-        
-        
-        if ($auth->hasIdentity()) {
-        
-            $identity = $auth->getIdentity();
-            echo $identity;
-            print_r($_SESSION);
-        
-        }else{
-            echo '没有登录';
-        }
     }
 
     public function getConfig()
@@ -75,10 +62,10 @@ class Module
                         ->addRole($adminitrator);
                     
                     
-                    $SettingControllerIndex = new Resource('Setting\Controller\IndexController');
-                    $acl->addResource($SettingControllerIndex);
+                    $BaseSettingController = new Resource('Setting\Controller\BaseSettingController');
+                    $acl->addResource($BaseSettingController);
                     
-                    $acl->allow($guest,$SettingControllerIndex,'index');
+                    $acl->allow($adminitrator,$BaseSettingController);
                     
                     return $acl;
                 },

@@ -9,12 +9,11 @@
 
 namespace Setting\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Setting\Form\PaymentSettingForm;
 use Setting\Model\PaymentInterface;
 
-class PaymentController extends AbstractActionController
+class PaymentController extends BaseSettingController
 {
     public function indexAction()
     {
@@ -95,11 +94,9 @@ class PaymentController extends AbstractActionController
         return $view_page;
     }
     
-    private function setChildViews(ViewModel $view_page) {
+    protected function setChildViews(ViewModel $view_page) {
         
-        $view_menu = new ViewModel();
-        $view_menu->setTemplate('setting/common/menu');
-        $view_page->addChild($view_menu,'menu');
+        parent::setChildViews($view_page);
         
         $view_paymentmenu = new ViewModel();
         $view_paymentmenu->setTemplate('setting/common/payment-menu');
