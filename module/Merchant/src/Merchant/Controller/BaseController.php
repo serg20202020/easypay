@@ -15,4 +15,10 @@ use Application\Controller\AclController;
 class BaseController extends AclController
 {
     public $AclResourceName = __CLASS__;
+    
+    function __construct() {
+        
+        @session_start();
+        $_SESSION['testMerchant'] = '1';
+    }
 }
