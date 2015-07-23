@@ -109,7 +109,7 @@ class Module
                         }
                     };
                 },
-                'GetCurrentRole' => function(){
+                'GetCurrentRole' => function($sm){
                     
                     $role = new Role\Guest();
                     
@@ -119,10 +119,37 @@ class Module
                         if ($auth->getIdentity() === 'Administrator') $role = new Role\Adminitrator();
                         elseif ($auth->getIdentity() === 'Staff') $role = new Role\Staff();
                         
+                    }else{
+                        
+                        // Client
+                        $MerchantID = $sm->get('GetClientMerchantID');
+                        if ($MerchantID) {
+                            $role = new Role\Client();
+                        }
+                        
                     }
                     
                     return $role;
                 },
+                
+                'GetClientMerchantID'=>function ($sm){
+                    
+                    $MerchantID = null;
+                    
+                    $config = $sm->get('Config');
+                    
+                    if (!empty($config['ClientSessionName'])){
+                        
+                        @session_start();
+                        if (!empty($_SESSION[$config['ClientSessionName']])){
+                            $MerchantID = $_SESSION[$config['ClientSessionName']];
+                        }
+                        
+                    }
+                    
+                    return $MerchantID;
+                },
+                
                 'SiteIsInstalled'=> function (){
                     $config_file = 'config/autoload/local.php';
                     if (file_exists($config_file)) $config = include $config_file;
