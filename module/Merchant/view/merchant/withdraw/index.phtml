@@ -1,0 +1,22 @@
+<?php echo $this->menu; ?>
+
+<h4><?php echo $this->translate('Make an Withdraw.');?></h4>
+<?php
+$form = $this->form;
+$form->get('withdraw_type')->setLabel($this->translate('Withdraw Method'));
+$form->get('price')->setLabel($this->translate('Amount'));
+$form->get('submit')->setAttributes(array(
+    'value' => $this->translate('Submit'),
+    'id' => 'submitbutton',
+));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+
+<div><?php echo $this->formRow($form->get('withdraw_type')); ?></div>
+<div><?php echo $this->formRow($form->get('price')); ?></div>
+<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+<?php echo $this->form()->closeTag(); ?>
+

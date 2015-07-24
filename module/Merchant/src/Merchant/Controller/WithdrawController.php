@@ -2,6 +2,7 @@
 namespace Merchant\Controller;
 
 use Zend\View\Model\ViewModel;
+use Merchant\Form;
 
 /**
  * WithdrawController
@@ -19,7 +20,29 @@ class WithdrawController extends BaseController
      */
     public function indexAction()
     {
-        // TODO Auto-generated WithdrawController::indexAction() default action
-        return new ViewModel();
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $translator = $this->getServiceLocator()->get('translator');
+        $headTitle->append($translator->translate('Withdraw'));
+        
+        $form = new Form\WithdrawForm();
+        $vars = array('form'=>$form);
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+        
+            $post_data = $request->getPost();
+        
+            $form->setData($post_data);
+        
+            // Validate the form
+            if ($form->isValid()) {
+                
+            }
+        }
+        
+        $view_page = new ViewModel($vars);
+        $view_page = $this->setChildViews($view_page);
+        
+        return $view_page;
     }
 }
