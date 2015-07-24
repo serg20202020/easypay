@@ -8,6 +8,7 @@
  */
 
 namespace Merchant\Controller;
+use Zend\View\Model\ViewModel;
 
 
 
@@ -15,7 +16,15 @@ class IndexController extends BaseController
 {
     public function indexAction()
     {
-        return array();
+        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+        $translator = $this->getServiceLocator()->get('translator');
+        $headTitle->append($translator->translate('Merchant workbench'));
+        
+        $view_page = new ViewModel();
+        
+        $view_page = $this->setChildViews($view_page);
+        
+        return $view_page;
     }
 
     public function fooAction()

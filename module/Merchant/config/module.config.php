@@ -3,6 +3,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Merchant\Controller\Index' => 'Merchant\Controller\IndexController',
+            'Merchant\Controller\Setting' => 'Merchant\Controller\SettingController',
+            'Merchant\Controller\Trade' => 'Merchant\Controller\TradeController',
+            'Merchant\Controller\Withdraw' => 'Merchant\Controller\WithdrawController',
         ),
     ),
     'router' => array(
@@ -38,11 +41,28 @@ return array(
                             ),
                         ),
                     ),
+                    'setting' => array(
+                        'type'    => 'Literal',
+                        'options' => array(
+                            // Change this to something specific to your module
+                            'route'    => '/setting',
+                            'defaults' => array(
+                                // Change this value to reflect the namespace in which
+                                // the controllers for your module are found
+                                '__NAMESPACE__' => 'Merchant\Controller',
+                                'controller'    => 'Setting',
+                                'action'        => 'index',
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
     ),
     'view_manager' => array(
+        'template_map' => array(
+            'merchant/common/menu'           => __DIR__ . '/../view/common/menu.phtml'
+        ),
         'template_path_stack' => array(
             'Merchant' => __DIR__ . '/../view',
         ),
