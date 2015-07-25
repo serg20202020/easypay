@@ -1,7 +1,6 @@
 <?php
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * AclController
@@ -11,7 +10,7 @@ use Zend\Mvc\Controller\AbstractActionController;
  * @version
  *
  */
-class AclController extends AbstractActionController
+class AclController extends BaseController
 {
     public function onDispatch(\Zend\Mvc\MvcEvent $e){
         $Acl = $this->getServiceLocator()->get('Acl');

@@ -21,9 +21,7 @@ class SettingController extends BaseController
      */
     public function indexAction()
     {
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        $headTitle->append($translator->translate('Withdraw account setting'));
+        $this->appendTitle($this->translate('Withdraw account setting'));
         
         
         $form = new Form\SettingForm();
@@ -34,7 +32,7 @@ class SettingController extends BaseController
         
         if (empty($MerchantID)) throw new \Exception('MerchantID is empty !');
         
-        $setting = new Setting($MerchantID,$this->getServiceLocator());
+        $setting = new Setting($this->getServiceLocator(),$MerchantID);
         $form->bind($setting);
         
         $request = $this->getRequest();

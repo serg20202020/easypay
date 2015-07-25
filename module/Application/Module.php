@@ -163,7 +163,15 @@ class Module
                     $reader = new Config($config);
                     if (!empty($reader->db)) return true;
                     else return false;
-                }
+                },
+                
+                'MysqlDatetimeMaker'=>function (){
+                    
+                    return function (){
+                        return date('Y-n-j H:i:s',time());
+                    };
+                    
+                },
                 
             ),
         );

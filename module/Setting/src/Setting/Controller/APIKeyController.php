@@ -22,9 +22,7 @@ class APIKeyController extends BaseSettingController
      */
     public function indexAction()
     {
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        $headTitle->append($translator->translate('API Key setting'));
+        $this->appendTitle($this->translate('API Key setting'));
         
         $form = new APIKeySettingForm();
         
@@ -47,10 +45,7 @@ class APIKeyController extends BaseSettingController
         
         
         $view_page = new ViewModel(array('form'=>$form));
-        
-        $view_menu = new ViewModel();
-        $view_menu->setTemplate('setting/common/menu');
-        $view_page->addChild($view_menu,'menu');
+        $this->setChildViews($view_page);
         
         return $view_page;
     }

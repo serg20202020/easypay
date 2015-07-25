@@ -16,9 +16,7 @@ class IndexController extends BaseController
 {
     public function indexAction()
     {
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        $headTitle->append($translator->translate('Merchant workbench'));
+        $this->appendTitle($this->translate('Merchant workbench'));
         
         $view_page = new ViewModel();
         

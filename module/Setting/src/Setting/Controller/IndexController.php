@@ -19,11 +19,7 @@ class IndexController extends BaseSettingController
      */
     public function indexAction()
     {
-            
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        
-        $headTitle->append($translator->translate('Setting up the system.'));
+        $this->appendTitle($this->translate('Setting up the system.'));
         
         $view_page = new ViewModel();
         $this->setChildViews($view_page);

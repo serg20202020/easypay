@@ -17,9 +17,7 @@ class PaymentController extends BaseSettingController
 {
     public function indexAction()
     {
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        $headTitle->append($translator->translate('Payment interface setting'));
+        $this->appendTitle($this->translate('Payment interface setting'));
         
         $view_page = new ViewModel();
         
@@ -30,9 +28,7 @@ class PaymentController extends BaseSettingController
 
     public function alipayAction()
     {
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        $headTitle->append($translator->translate('Alipay interface setting'));
+        $this->appendTitle($this->translate('Alipay interface setting'));
         
         
         $form = new PaymentSettingForm(PaymentInterface::PAYMENT_TYPE_ALIPAY);
@@ -63,9 +59,7 @@ class PaymentController extends BaseSettingController
     
     public function wxpayAction()
     {
-        $headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
-        $translator = $this->getServiceLocator()->get('translator');
-        $headTitle->append($translator->translate('Weixin-pay interface setting'));
+        $this->appendTitle($this->translate('Weixin-pay interface setting'));
         
         
         $form = new PaymentSettingForm(PaymentInterface::PAYMENT_TYPE_WXPAY);
