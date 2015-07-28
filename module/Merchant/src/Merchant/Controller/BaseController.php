@@ -19,8 +19,8 @@ class BaseController extends AclController
     
     function __construct() {
         
-        @session_start();
-        $_SESSION['testMerchant'] = '1';
+        //@session_start();
+        //$_SESSION['testMerchant'] = '1';
     }
 
     protected function setChildViews(ViewModel $view_page) {

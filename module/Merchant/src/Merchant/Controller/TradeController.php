@@ -21,7 +21,7 @@ class TradeController extends BaseController
      */
     public function indexAction()
     {
-        $this->appendTitle($this->translate('Withdraw administrator'));
+        $this->appendTitle($this->translate('Trade query'));
         
         $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $select = new \Zend\Db\Sql\Select();
