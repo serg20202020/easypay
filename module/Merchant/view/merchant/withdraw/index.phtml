@@ -1,22 +1,31 @@
 <?php echo $this->menu; ?>
 
-<h4><?php echo $this->translate('Make an Withdraw.');?></h4>
-<?php
-$form = $this->form;
-$form->get('withdraw_type')->setLabel($this->translate('Withdraw Method'));
-$form->get('price')->setLabel($this->translate('Amount'));
-$form->get('submit')->setAttributes(array(
-    'value' => $this->translate('Submit'),
-    'id' => 'submitbutton',
-));
-$form->prepare();
 
 
-echo $this->form()->openTag($form);
-?>
+<?php if (count($this->paginator)): ?>
 
-<div><?php echo $this->formRow($form->get('withdraw_type')); ?></div>
-<div><?php echo $this->formRow($form->get('price')); ?></div>
-<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
-<?php echo $this->form()->closeTag(); ?>
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'widget/pagination-control', array('route' => 'merchant/withdraw_paginator')); ?>
 
+<ul>
+<?php foreach ($this->paginator as $item): ?>
+  <li>
+    <div>编号:<?php echo $item['id']; ?></div>
+    <div>商家id:<?php echo $item['merchant_id']; ?></div>
+    <div>提现方式:<?php echo $item['withdraw_type']; ?></div>
+    <div>提现交易号:<?php echo $item['withdraw_interface_trade_id']; ?></div>
+    <div>金额:<?php echo $item['price']; ?></div>
+    <div>申请时间:<?php echo $item['create_time']; ?></div>
+    <div>处理时间:<?php echo $item['pay_time']; ?></div>
+    <div>处理状态:<?php echo $item['pay_status']; ?></div>
+  </li>
+<?php endforeach; ?>
+</ul>
+
+
+<?php echo $this->paginationControl($this->paginator,
+                                    'Sliding',
+                                    'widget/pagination-control', array('route' => 'merchant/withdraw_paginator')); ?>
+
+<?php endif; ?>

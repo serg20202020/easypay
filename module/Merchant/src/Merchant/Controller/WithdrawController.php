@@ -4,6 +4,8 @@ namespace Merchant\Controller;
 use Zend\View\Model\ViewModel;
 use Merchant\Form;
 use Merchant\Model\Withdraw;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\DbSelect;
 
 /**
  * WithdrawController
@@ -15,11 +17,30 @@ use Merchant\Model\Withdraw;
  */
 class WithdrawController extends BaseController
 {
-
-    /**
-     * The default action - show the home page
-     */
-    public function indexAction()
+    public function indexAction(){
+        $this->appendTitle($this->translate('Withdraw administrator'));
+        
+        $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $select = new \Zend\Db\Sql\Select();
+        $select->from('withdraw')->where(array(
+            'merchant_id'=>$this->getMerchantId()
+        ));
+        
+        
+        $dbselect = new DbSelect($select,$dbAdapter);
+        $paginator = new Paginator($dbselect);
+        
+        $paginator->setCurrentPageNumber( $this->params()->fromRoute('page') );
+        
+        $vars = array('paginator'=>$paginator);
+        
+        $view_page = new ViewModel($vars);
+        $view_page = $this->setChildViews($view_page);
+        
+        return $view_page;
+    }
+    
+    public function addAction()
     {
         $this->appendTitle($this->translate('Withdraw'));
         
@@ -39,12 +60,7 @@ class WithdrawController extends BaseController
             // Validate the form
             if ($form->isValid()) {
                 
-                $GetClientMerchantID = $this->getServiceLocator()->get('GetClientMerchantID');
-                $MerchantID = $GetClientMerchantID();
-                
-                if (empty($MerchantID)) throw new \Exception('MerchantID is empty !');
-                
-                $withdraw->merchant_id = $MerchantID;
+                $withdraw->merchant_id = $this->getMerchantId();
                 $withdraw->pay_status = 0;
                 
                 $make_time = $this->getServiceLocator()->get('MysqlDatetimeMaker');
@@ -59,5 +75,15 @@ class WithdrawController extends BaseController
         $view_page = $this->setChildViews($view_page);
         
         return $view_page;
+    }
+    
+    private function getMerchantId() {
+        
+        $GetClientMerchantID = $this->getServiceLocator()->get('GetClientMerchantID');
+        $MerchantID = $GetClientMerchantID();
+        
+        if (empty($MerchantID)) throw new \Exception('MerchantID is empty !');
+        
+        return $MerchantID;
     }
 }

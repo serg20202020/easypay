@@ -56,10 +56,10 @@ return array(
                         ),
                     ),
                     'withdraw' => array(
-                        'type'    => 'Literal',
+                        'type'    => 'Segment',
                         'options' => array(
                             // Change this to something specific to your module
-                            'route'    => '/withdraw',
+                            'route'    => '/withdraw[/:action]',
                             'defaults' => array(
                                 // Change this value to reflect the namespace in which
                                 // the controllers for your module are found
@@ -69,13 +69,29 @@ return array(
                             ),
                         ),
                     ),
+                    'withdraw_paginator' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            // Change this to something specific to your module
+                            'route'    => '/withdraw[/page/:page]',
+                            'defaults' => array(
+                                // Change this value to reflect the namespace in which
+                                // the controllers for your module are found
+                                '__NAMESPACE__' => 'Merchant\Controller',
+                                'controller'    => 'Withdraw',
+                                'action'        => 'index',
+                                'page'          => 1,
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),
     ),
     'view_manager' => array(
         'template_map' => array(
-            'merchant/common/menu'           => __DIR__ . '/../view/common/menu.phtml'
+            'merchant/common/menu'           => __DIR__ . '/../view/common/menu.phtml',
+            
         ),
         'template_path_stack' => array(
             'Merchant' => __DIR__ . '/../view',
