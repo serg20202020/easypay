@@ -25,4 +25,14 @@ class BaseController extends AbstractActionController
         $translator = $this->getServiceLocator()->get('translator');
         return $translator->translate($string);
     }
+    
+    protected function getMerchantId() {
+    
+        $GetClientMerchantID = $this->getServiceLocator()->get('GetClientMerchantID');
+        $MerchantID = $GetClientMerchantID();
+    
+        if (empty($MerchantID)) throw new \Exception('MerchantID is empty !');
+    
+        return $MerchantID;
+    }
 }

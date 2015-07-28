@@ -84,6 +84,21 @@ return array(
                             ),
                         ),
                     ),
+                    'trade_paginator' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            // Change this to something specific to your module
+                            'route'    => '/trade[/page/:page]',
+                            'defaults' => array(
+                                // Change this value to reflect the namespace in which
+                                // the controllers for your module are found
+                                '__NAMESPACE__' => 'Merchant\Controller',
+                                'controller'    => 'Trade',
+                                'action'        => 'index',
+                                'page'          => 1,
+                            ),
+                        ),
+                    ),
                 ),
             ),
         ),

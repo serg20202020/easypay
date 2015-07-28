@@ -77,13 +77,4 @@ class WithdrawController extends BaseController
         return $view_page;
     }
     
-    private function getMerchantId() {
-        
-        $GetClientMerchantID = $this->getServiceLocator()->get('GetClientMerchantID');
-        $MerchantID = $GetClientMerchantID();
-        
-        if (empty($MerchantID)) throw new \Exception('MerchantID is empty !');
-        
-        return $MerchantID;
-    }
 }
