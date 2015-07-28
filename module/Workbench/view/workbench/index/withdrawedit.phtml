@@ -1,0 +1,29 @@
+<?php echo $this->menu; ?>
+
+<h4><?php echo $this->translate('Edit a Withdraw.');?></h4>
+<?php
+$form = $this->form;
+$form->get('withdraw_interface_trade_id')->setLabel($this->translate('Payed Trade Id'));
+$form->get('pay_status')->setLabel($this->translate('Pay Status'));
+$form->get('submit')->setAttributes(array(
+    'value' => $this->translate('Save'),
+    'id' => 'submitbutton',
+));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+
+<div>商家名称:<?php echo $this->withdraw->name; ?></div>
+<div>商家支付宝：<?php echo $this->merchant->alipay_account; ?></div>
+<div>商家银行帐号：<?php echo $this->merchant->bank_type.' '.$this->merchant->bank_account_name.' '.$this->merchant->bank_account_card; ?> </div>
+<div>提现方式:<?php echo $this->withdraw->withdraw_type; ?></div>
+<div>提现金额:<?php echo $this->withdraw->price; ?></div>
+<div>申请时间:<?php echo $this->withdraw->create_time; ?></div>
+
+<div><?php if (!empty($this->saved) && $this->saved === true) echo $this->translate('Saved !'); ?></div>
+<div><?php echo $this->formRow($form->get('withdraw_interface_trade_id')); ?></div>
+<div><?php echo $this->formRow($form->get('pay_status')); ?></div>
+<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+<?php echo $this->form()->closeTag(); ?>

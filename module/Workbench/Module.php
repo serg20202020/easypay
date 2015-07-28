@@ -42,5 +42,19 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        
+        $eventManager->attach('render', array($this, 'setLayoutTitle'));
+    }
+    
+    public function setLayoutTitle($e)
+    {
+        // Getting the view helper manager from the application service manager
+        $viewHelperManager = $e->getApplication()->getServiceManager()->get('viewHelperManager');
+        
+        // Getting the headTitle helper from the view helper manager
+        $headTitleHelper   = $viewHelperManager->get('headTitle');
+    
+        // Setting the action, controller, module and site name as title segments
+        $headTitleHelper->append('Workbench');
     }
 }

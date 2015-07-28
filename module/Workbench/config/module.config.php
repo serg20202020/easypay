@@ -22,19 +22,28 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    // This route is a sane default when developing a module;
-                    // as you solidify the routes for your module, however,
-                    // you may want to remove it and replace it with more
-                    // specific routes.
-                    'default' => array(
+                    'withdraw_paginator'=>array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/withdraw[/page/:page]',
                             'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'page' => '[1-9][0-9]*'
                             ),
                             'defaults' => array(
+                                'action'        => 'withdraw',
+                                'page'=>1
+                            ),
+                        ),
+                    ),
+                    'withdraw_edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/withdraw/edit/:withdraw_id',
+                            'constraints' => array(
+                                'withdraw_id' => '[1-9][0-9]*'
+                            ),
+                            'defaults' => array(
+                                'action'        => 'withdrawedit',
                             ),
                         ),
                     ),
@@ -43,6 +52,10 @@ return array(
         ),
     ),
     'view_manager' => array(
+        'template_map' => array(
+            'workbench/common/menu'           => __DIR__ . '/../view/common/menu.phtml',
+        
+        ),
         'template_path_stack' => array(
             'Workbench' => __DIR__ . '/../view',
         ),
