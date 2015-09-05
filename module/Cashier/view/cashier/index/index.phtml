@@ -29,7 +29,7 @@ $(document).ready(function($){
 
 		var payment_method = $('input:radio[name=payment_method]:checked').val();
 
-		<?php /* Save the payment_method to DB  */ ?>
+		<?php /* Save the payment_method to DB & Redirect to the selected PayInterface gateway if Save the payment_method successlly.  */ ?>
 
 		$.ajax({
 			   type: "POST",

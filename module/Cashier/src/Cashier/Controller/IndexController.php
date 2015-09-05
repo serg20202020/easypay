@@ -67,7 +67,7 @@ class IndexController extends BaseController
             $payment_interface_type = null;
             
 
-            if (!empty($trade)){
+            if (!empty($trade)){   // Trade exsist.
                 
                 if ($trade->pay_status){
                     throw new \Exception('Trade had payed before!');
@@ -84,7 +84,7 @@ class IndexController extends BaseController
                     
                 }
                 
-            }else{
+            }else{   // Trade not exsist.
                 
                 // Create a new trade
                 $tableGateway = new TableGateway('trade', $dbAdapter, new Feature\RowGatewayFeature('id'));
@@ -114,6 +114,10 @@ class IndexController extends BaseController
         
     }
 
+    /**
+     * Save one trade's payment type into database in AJAX method.
+     * @return \Zend\View\Model\JsonModel
+     */
     public function setpaymentAction()
     {
         $data = array();
@@ -152,6 +156,13 @@ class IndexController extends BaseController
         
     }
     
+    /**
+     * Get the trade Object by the merchant id and the trade id, if it exsist.
+     * @param unknown $merchant
+     * @param unknown $trade
+     * @throws \Exception
+     * @return Ambigous <\Zend\Db\ResultSet\array, ArrayObject, \Zend\Db\ResultSet\null>|NULL
+     */
     private function getTrade($merchant,$trade) {
         
         $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
