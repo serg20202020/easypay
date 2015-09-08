@@ -5,6 +5,8 @@ use Zend\View\Model\ViewModel;
 use Cashier\Model\Alipay\AlipaySubmit;
 use Cashier\Model\Alipay\AlipayNotify;
 use Setting\Model\PaymentInterface;
+use Cashier\Model\Log;
+use Cashier\Model\Cashier\Model;
 
 /**
  * PayGatewayController
@@ -63,11 +65,11 @@ class PayGatewayController extends BaseController
         $payment_type = "1";
         //必填，不能修改
         //服务器异步通知页面路径
-        $notify_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_notify'));
+        $notify_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipaynotify'));
         //需http://格式的完整路径，不能加?id=123这类自定义参数
         
         //页面跳转同步通知页面路径
-        $return_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_redirect'));
+        $return_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipayredirect'));
         //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
         
         //商户订单号
@@ -127,9 +129,32 @@ class PayGatewayController extends BaseController
         return new ViewModel(array('redirect_script'=>$html_text));
     }
 
-    public function alipay_notifyAction() {
+    public function alipaynotifyAction() {
         
         $alipay_config = $this->alipay_getconfig();
+        
+        $log_file_path = 'data/log/alipay_notify.txt';
+        $log_content = '';
+        $Log = new Log();
+        
+        $log_content .= "【 接收到了支付宝异步通知 】\r\n";
+        
+        
+        /* *
+         * 功能：支付宝服务器异步通知页面
+         * 版本：3.3
+         * 日期：2012-07-23
+         * 说明：
+         * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+         * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+        
+        
+         *************************页面功能说明*************************
+         * 创建该页面文件时，请留心该页面文件中无任何HTML代码及空格。
+         * 该页面不能在本机电脑测试，请到服务器上做测试。请确保外部可以访问该页面。
+         * 该页面调试工具请使用写文本函数logResult，该函数已被默认关闭，见alipay_notify_class.php中的函数verifyNotify
+         * 如果没有收到该页面返回的 success 信息，支付宝会在24小时内按一定的时间策略重发通知
+         */
         
         //计算得出通知验证结果
         $alipayNotify = new AlipayNotify($alipay_config);
@@ -154,8 +179,11 @@ class PayGatewayController extends BaseController
         
             //交易状态
             $trade_status = $_POST['trade_status'];
-        
-        
+            
+            
+            $log_content .= "该通知[通过了]RAS验证\r\n";
+            
+            
             if($_POST['trade_status'] == 'TRADE_FINISHED') {
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
@@ -166,6 +194,8 @@ class PayGatewayController extends BaseController
         
                 //调试用，写文本函数记录程序运行情况是否正常
                 //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+                
+                
             }
             else if ($_POST['trade_status'] == 'TRADE_SUCCESS') {
                 //判断该笔订单是否在商户网站中已经做过处理
@@ -184,6 +214,9 @@ class PayGatewayController extends BaseController
             echo "success";		//请不要修改或删除
         
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            $log_content .= "订单状态为：".$_POST['trade_status']."\r\n";
+            
         }
         else {
             //验证失败
@@ -191,12 +224,102 @@ class PayGatewayController extends BaseController
         
             //调试用，写文本函数记录程序运行情况是否正常
             //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
+            
+            $log_content .= "该通知[没有通过]RAS验证\r\n";
         }
+        
+        $log_content .= "通知的完整POST数据：".var_export($_POST,true);
+        
+        $Log->toFile($log_file_path, $log_content);
+        
+        exit();
         
     }
 
-    public function alipay_redirectAction() {
-        ;
+    public function alipayredirectAction() {
+        
+        $alipay_config = $this->alipay_getconfig();
+        
+        $log_file_path = 'data/log/alipay_redirect.txt';
+        $log_content = '';
+        $Log = new Log();
+        
+        $log_content .= "【 请求了支付宝跳转通知页面 】\r\n";
+        
+        
+        /* *
+         * 功能：支付宝页面跳转同步通知页面
+         * 版本：3.3
+         * 日期：2012-07-23
+         * 说明：
+         * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+         * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+        
+         *************************页面功能说明*************************
+         * 该页面可在本机电脑测试
+         * 可放入HTML等美化页面的代码、商户业务逻辑程序代码
+         * 该页面可以使用PHP开发工具调试，也可以使用写文本函数logResult，该函数已被默认关闭，见alipay_notify_class.php中的函数verifyReturn
+         */
+        
+        
+        //计算得出通知验证结果
+        $alipayNotify = new AlipayNotify($alipay_config);
+        $verify_result = $alipayNotify->verifyReturn();
+        if($verify_result) {//验证成功
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //请在这里加上商户的业务逻辑程序代码
+        
+            //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+            //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表
+        
+            //商户订单号
+        
+            $out_trade_no = $_GET['out_trade_no'];
+        
+            //支付宝交易号
+        
+            $trade_no = $_GET['trade_no'];
+        
+            //交易状态
+            $trade_status = $_GET['trade_status'];
+            
+            
+            $log_content .= "该跳转[通过了]RAS验证\r\n";
+        
+        
+            if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') {
+                //判断该笔订单是否在商户网站中已经做过处理
+                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+                //如果有做过处理，不执行商户的业务程序
+            }
+            else {
+                echo "trade_status=".$_GET['trade_status'];
+            }
+        
+            echo "验证成功<br />";
+        
+            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+        
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            $log_content .= "订单状态为：".$_GET['trade_status']."\r\n";
+            
+        }
+        else {
+            //验证失败
+            //如要调试，请看alipay_notify.php页面的verifyReturn函数
+            echo "验证失败";
+            
+            $log_content .= "该跳转[没有通过]RAS验证\r\n";
+        }
+        
+        
+        $log_content .= "请求的完整GET数据：".var_export($_GET,true);
+        
+        $Log->toFile($log_file_path, $log_content);
+        
+        exit();
+
     }
     
     /**
