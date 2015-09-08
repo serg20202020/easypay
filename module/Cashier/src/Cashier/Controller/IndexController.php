@@ -143,7 +143,7 @@ class IndexController extends BaseController
                 $row->payment_interface_type = $payment_interface_type[$post['payment_method']];
                 $data['return'] = $row->save();
                 $data['interface'] = $row->payment_interface_type;
-                session_start();
+                @session_start();
                 $_SESSION['paying_trade'] = $row->toArray();
             }
             

@@ -9,10 +9,9 @@ class AlipaySubmit {
 
 	var $alipay_config;
 	/**
-	 *支付宝网关地址
+	 *支付宝网关地址（新）
 	 */
-	//var $alipay_gateway_new = 'https://mapi.alipay.com/gateway.do?';
-	var $alipay_gateway_new = 'http://wappaygw.alipay.com/service/rest.htm?';
+	var $alipay_gateway_new = 'https://mapi.alipay.com/gateway.do?';
 
 	function __construct($alipay_config){
 		$this->alipay_config = $alipay_config;
@@ -32,13 +31,7 @@ class AlipaySubmit {
 		
 		$mysign = "";
 		switch (strtoupper(trim($this->alipay_config['sign_type']))) {
-			case "MD5" :
-				$mysign = md5Sign($prestr, $this->alipay_config['key']);
-				break;
 			case "RSA" :
-				$mysign = rsaSign($prestr, $this->alipay_config['private_key_path']);
-				break;
-			case "0001" :
 				$mysign = rsaSign($prestr, $this->alipay_config['private_key_path']);
 				break;
 			default :
@@ -65,9 +58,7 @@ class AlipaySubmit {
 		
 		//签名结果与签名方式加入请求提交参数组中
 		$para_sort['sign'] = $mysign;
-		if($para_sort['service'] != 'alipay.wap.trade.create.direct' && $para_sort['service'] != 'alipay.wap.auth.authAndExecute') {
-			$para_sort['sign_type'] = strtoupper(trim($this->alipay_config['sign_type']));
-		}
+		$para_sort['sign_type'] = strtoupper(trim($this->alipay_config['sign_type']));
 		
 		return $para_sort;
 	}
@@ -148,43 +139,6 @@ class AlipaySubmit {
 	}
 	
 	/**
-     * 解析远程模拟提交后返回的信息
-	 * @param $str_text 要解析的字符串
-     * @return 解析结果
-     */
-	function parseResponse($str_text) {
-		//以“&”字符切割字符串
-		$para_split = explode('&',$str_text);
-		//把切割后的字符串数组变成变量与数值组合的数组
-		foreach ($para_split as $item) {
-			//获得第一个=字符的位置
-			$nPos = strpos($item,'=');
-			//获得字符串长度
-			$nLen = strlen($item);
-			//获得变量名
-			$key = substr($item,0,$nPos);
-			//获得数值
-			$value = substr($item,$nPos+1,$nLen-$nPos-1);
-			//放入数组中
-			$para_text[$key] = $value;
-		}
-		
-		if( ! empty ($para_text['res_data'])) {
-			//解析加密部分字符串
-			if($this->alipay_config['sign_type'] == '0001') {
-				$para_text['res_data'] = rsaDecrypt($para_text['res_data'], $this->alipay_config['private_key_path']);
-			}
-			
-			//token从res_data中解析出来（也就是说res_data中已经包含token的内容）
-			$doc = new \DOMDocument();
-			$doc->loadXML($para_text['res_data']);
-			$para_text['request_token'] = $doc->getElementsByTagName( "request_token" )->item(0)->nodeValue;
-		}
-		
-		return $para_text;
-	}
-	
-	/**
      * 用于防钓鱼，调用接口query_timestamp来获取时间戳的处理函数
 	 * 注意：该功能PHP5环境及以上支持，因此必须服务器、本地电脑中装有支持DOMDocument、SSL的PHP配置环境。建议本地调试时使用PHP开发软件
      * return 时间戳字符串
@@ -193,7 +147,7 @@ class AlipaySubmit {
 		$url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']))."&_input_charset=".trim(strtolower($this->alipay_config['input_charset']));
 		$encrypt_key = "";		
 
-		$doc = new \DOMDocument();
+		$doc = new DOMDocument();
 		$doc->load($url);
 		$itemEncrypt_key = $doc->getElementsByTagName( "encrypt_key" );
 		$encrypt_key = $itemEncrypt_key->item(0)->nodeValue;
@@ -201,5 +155,3 @@ class AlipaySubmit {
 		return $encrypt_key;
 	}
 }
-
-?>

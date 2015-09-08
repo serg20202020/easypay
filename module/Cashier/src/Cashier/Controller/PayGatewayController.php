@@ -34,33 +34,41 @@ class PayGatewayController extends BaseController
          * Get the configuration of alipay payment interface.
          */
         $alipay_config = $this->alipay_getconfig();
-        	
-        //返回格式
-        $format = "xml";
-        //必填，不需要修改
         
-        //返回格式
-        $v = "2.0";
-        //必填，不需要修改
-        
-        //请求号
-        $req_id = date('Ymdhis');
-        //必填，须保证每次请求都是唯一
-        
-        //**req_data详细信息**
         
         $domain_url = 'http://'.$_SERVER['HTTP_HOST'];
+        
+        
+        
+        /* *
+         * 功能：手机网站支付接口接入页
+         * 版本：3.3
+         * 修改日期：2012-07-23
+         * 说明：
+         * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+         * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+        
+         *************************注意*************************
+         * 如果您在接口集成过程中遇到问题，可以按照下面的途径来解决
+         * 1、商户服务中心（https://b.alipay.com/support/helperApply.htm?action=consultationApply），提交申请集成协助，我们会有专业的技术工程师主动联系您协助解决
+         * 2、商户帮助中心（http://help.alipay.com/support/232511-16307/0-16307.htm?sh=Y&info_type=9）
+         * 3、支付宝论坛（http://club.alipay.com/read-htm-tid-8681712.html）
+         * 如果不想使用扩展功能请把扩展功能参数赋空值。
+         */
+        
+        
+        /**************************请求参数**************************/
+        
+        //支付类型
+        $payment_type = "1";
+        //必填，不能修改
         //服务器异步通知页面路径
         $notify_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_notify'));
-        //需http://格式的完整路径，不允许加?id=123这类自定义参数
+        //需http://格式的完整路径，不能加?id=123这类自定义参数
         
         //页面跳转同步通知页面路径
-        $call_back_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_redirect'));
-        //需http://格式的完整路径，不允许加?id=123这类自定义参数
-        
-        //操作中断返回地址
-        $merchant_url = $domain_url.$this->url()->fromRoute('cashier/cancel');
-        //用户付款中途退出返回商户的地址。需http://格式的完整路径，不允许加?id=123这类自定义参数
+        $return_url = $domain_url.$this->url()->fromRoute('cashier/gateway',array('action'=>'alipay_redirect'));
+        //需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
         
         //商户订单号
         $out_trade_no = $paying_trade['merchant_trade_id'];
@@ -74,59 +82,47 @@ class PayGatewayController extends BaseController
         $total_fee = $paying_trade['price'];
         //必填
         
-        //请求业务参数详细
-        $req_data = '<direct_trade_create_req><notify_url>' . $notify_url . '</notify_url><call_back_url>' . $call_back_url . '</call_back_url><seller_account_name>' . trim($alipay_config['seller_email']) . '</seller_account_name><out_trade_no>' . $out_trade_no . '</out_trade_no><subject>' . $subject . '</subject><total_fee>' . $total_fee . '</total_fee><merchant_url>' . $merchant_url . '</merchant_url></direct_trade_create_req>';
-        //必填
+        //商品展示地址
+        $show_url = $domain_url;
+        //必填，需以http://开头的完整路径，例如：http://www.商户网址.com/myorder.html
+        
+        //订单描述
+        $body = $subject;
+        //选填
+        
+        //超时时间
+        $it_b_pay = '';
+        //选填
+        
+        //钱包token
+        $extern_token = '';
+        //选填
+        
         
         /************************************************************/
-
-        //构造要请求的参数数组，无需改动
-        $para_token = array(
-            "service" => "alipay.wap.trade.create.direct",
-            "partner" => trim($alipay_config['partner']),
-            "sec_id" => trim($alipay_config['sign_type']),
-            "format"	=> $format,
-            "v"	=> $v,
-            "req_id"	=> $req_id,
-            "req_data"	=> $req_data,
-            "_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
-        );
-        
-        //建立请求
-        $alipaySubmit = new AlipaySubmit($alipay_config);
-        $html_text = $alipaySubmit->buildRequestHttp($para_token);
-        
-        //URLDECODE返回的信息
-        $html_text = urldecode($html_text);
-        
-        //解析远程模拟提交后返回的信息
-        $para_html_text = $alipaySubmit->parseResponse($html_text);
-        
-        //获取request_token
-        $request_token = $para_html_text['request_token'];
-        
-        
-        /**************************根据授权码token调用交易接口alipay.wap.auth.authAndExecute**************************/
-        
-        //业务详细
-        $req_data = '<auth_and_execute_req><request_token>' . $request_token . '</request_token></auth_and_execute_req>';
-        //必填
         
         //构造要请求的参数数组，无需改动
         $parameter = array(
-            "service" => "alipay.wap.auth.authAndExecute",
+            "service" => "alipay.wap.create.direct.pay.by.user",
             "partner" => trim($alipay_config['partner']),
-            "sec_id" => trim($alipay_config['sign_type']),
-            "format"	=> $format,
-            "v"	=> $v,
-            "req_id"	=> $req_id,
-            "req_data"	=> $req_data,
+            "seller_id" => trim($alipay_config['seller_id']),
+            "payment_type"	=> $payment_type,
+            "notify_url"	=> $notify_url,
+            "return_url"	=> $return_url,
+            "out_trade_no"	=> $out_trade_no,
+            "subject"	=> $subject,
+            "total_fee"	=> $total_fee,
+            "show_url"	=> $show_url,
+            "body"	=> $body,
+            "it_b_pay"	=> $it_b_pay,
+            "extern_token"	=> $extern_token,
             "_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
         );
         
         //建立请求
         $alipaySubmit = new AlipaySubmit($alipay_config);
-        $html_text = $alipaySubmit->buildRequestForm($parameter, 'get', '确认');
+        $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
+        
         
         return new ViewModel(array('redirect_script'=>$html_text));
     }
@@ -210,25 +206,37 @@ class PayGatewayController extends BaseController
     private function alipay_getconfig() {
         
         $PaymentInterface = new PaymentInterface(PaymentInterface::PAYMENT_TYPE_ALIPAY, $this->getServiceLocator());
+
+        /* *
+         * 配置文件
+         * 版本：3.3
+         * 日期：2012-07-19
+         * 说明：
+         * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+         * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+        
+         * 提示：如何获取安全校验码和合作身份者id
+         * 1.用您的签约支付宝账号登录支付宝网站(www.alipay.com)
+         * 2.点击“商家服务”(https://b.alipay.com/order/myorder.htm)
+         * 3.点击“查询合作者身份(pid)”、“查询安全校验码(key)”
+        
+         * 安全校验码查看时，输入支付密码后，页面呈灰色的现象，怎么办？
+         * 解决方法：
+         * 1、检查浏览器配置，不让浏览器做弹框屏蔽设置
+         * 2、更换浏览器或电脑，重新登录查询。
+         */
         
         //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         //合作身份者id，以2088开头的16位纯数字
         $alipay_config['partner']		= $PaymentInterface->merchant_id;
         
-        //收款支付宝帐户
-        $alipay_config['seller_email']	= $PaymentInterface->account;
+        //收款支付宝账号
+        $alipay_config['seller_id']	= $alipay_config['partner'];
         
-        //安全检验码，以数字和字母组成的32位字符
-        //如果签名方式设置为“MD5”时，请设置该参数
-        $alipay_config['key']			= $PaymentInterface->api_key;
-        
-        
-        //商户的私钥（后缀是.pem）文件相对路径
-        //如果签名方式设置为“0001”时，请设置该参数
+        //商户的私钥（后缀是.pen）文件相对路径
         $alipay_config['private_key_path']	= 'data/alipay/key/rsa_private_key.pem';
         
-        //支付宝公钥（后缀是.pem）文件相对路径
-        //如果签名方式设置为“0001”时，请设置该参数
+        //支付宝公钥（后缀是.pen）文件相对路径
         $alipay_config['ali_public_key_path']= 'data/alipay/key/alipay_public_key.pem';
         
         
@@ -236,10 +244,10 @@ class PayGatewayController extends BaseController
         
         
         //签名方式 不需修改
-        $alipay_config['sign_type']    = 'MD5';
+        $alipay_config['sign_type']    = strtoupper('RSA');
         
         //字符编码格式 目前支持 gbk 或 utf-8
-        $alipay_config['input_charset']= 'utf-8';
+        $alipay_config['input_charset']= strtolower('utf-8');
         
         //ca证书路径地址，用于curl中ssl校验
         //请保证cacert.pem文件在当前文件夹目录中
@@ -248,7 +256,10 @@ class PayGatewayController extends BaseController
         //访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
         $alipay_config['transport']    = 'http';
         
-        /**************************调用授权接口alipay.wap.trade.create.direct获取授权码token**************************/
+        
+        
+        
+        
         
         return $alipay_config;
     }
