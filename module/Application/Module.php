@@ -91,6 +91,7 @@ class Module
                     $acl->allow($client,'Merchant\Controller\BaseController');
                     
                     $acl->allow($guest,'Cashier\Controller\BaseController');
+                    $acl->allow($guest,'Merchant\Controller\BaseController','login');
                     if (!$sm->get('SiteIsInstalled')) $acl->allow($guest,'Install\Controller\IndexController');
                     
                     return $acl;
@@ -141,14 +142,13 @@ class Module
                         
                         $config = $sm->get('Config');
                         
-                        if (!empty($config['ClientSessionName'])){
-                        
-                            @session_start();
-                            if (!empty($_SESSION[$config['ClientSessionName']])){
-                                $MerchantID = $_SESSION[$config['ClientSessionName']];
-                            }
-                        
+                        @session_start();
+                        if (isset($_SESSION['Merchant']) && !empty($_SESSION['Merchant'])){
+                            
+                            if ($_SERVER['REMOTE_ADDR'] == $_SESSION['Merchant']['ip']) $MerchantID = $_SESSION['Merchant']['token'];
+                            
                         }
+                        
                         
                         return $MerchantID;
                         

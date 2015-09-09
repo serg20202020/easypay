@@ -25,10 +25,39 @@ class IndexController extends BaseController
         return $view_page;
     }
 
-    public function fooAction()
+    /**
+     * Merchant automately login
+     * @return multitype:
+     */
+    public function loginAction()
     {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /index/index/foo
+        // Merchant automately login
+        
+        $encrypted_token = $this->params()->fromQuery('a');
+        $encrypted_ip = $this->params()->fromQuery('b');
+        
+        $key_file_path = getcwd().'/data/alipay/key/rsa_private_key.pem'; //echo $key_file_path.'<br>';
+        $key = openssl_pkey_get_private('file://'.$key_file_path);
+        
+        if (file_exists($key_file_path) && $key){
+             
+            openssl_private_decrypt(base64_decode($encrypted_token),$decrypted_token,$key);
+            openssl_private_decrypt(base64_decode($encrypted_ip),$decrypted_ip,$key);
+
+        }else{
+            exit('数据加密时出错：公钥不存在或无效！');
+        }
+        
+        @session_start();
+        
+        $_SESSION['Merchant'] = array(
+            'token'=>$decrypted_token,
+            'ip'=>$decrypted_ip
+        );
+        
+        //echo $decrypted_token."<br>";
+        //echo $decrypted_ip."<br>";
+        
         return array();
     }
 }

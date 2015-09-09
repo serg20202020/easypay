@@ -23,6 +23,14 @@ class BaseController extends AclController
         //$_SESSION['testMerchant'] = '1';
     }
 
+    public function onDispatch(\Zend\Mvc\MvcEvent $e){
+        
+        $this->AclResourceName = __CLASS__;
+        $this->AclPrivilegeName = $e->getRouteMatch()->getParam('action');
+        
+        return parent::onDispatch($e);
+    }
+    
     protected function setChildViews(ViewModel $view_page) {
     
         $view_menu = new ViewModel();
