@@ -10,6 +10,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Ddl;
 use Zend\Db\Sql\Ddl\Column;
 use Zend\Db\Sql\Ddl\Constraint;
+use Zend\Db\Metadata\Object\ConstraintObject;
 
 
 class DB extends Metadata
@@ -147,7 +148,34 @@ class DB extends Metadata
                 
             }
             
-            echo $sql->getSqlStringForSqlObject($AlterTable);
+            
+            // Delete exsisted constraints(mysql index) but PRIMARY KEY
+            $exsisted_constraints = $this->getConstraints($tableName);
+            
+            foreach ($exsisted_constraints as $exsisted_constraint){
+                if ($exsisted_constraint->getType() != 'PRIMARY KEY'){
+            
+                    $adapter->query(
+                        'ALTER TABLE `'.$tableName.'`
+                                 DROP index `'.str_replace('_zf_'.$tableName.'_', '', $exsisted_constraint->getName()).'`',
+                        $adapter::QUERY_MODE_EXECUTE
+                    );
+            
+                }
+            }
+            
+            // Add all constraints but PRIMARY KEY
+            foreach ($tableStructureData['constraint'] as $constraint){
+                
+                if ($constraint instanceof Constraint\PrimaryKey){
+                    // Do nothing
+                }else{
+                    // Add to DB
+                    $AlterTable->addConstraint($constraint);
+                }
+
+            }
+            
             $adapter->query(
                 $sql->getSqlStringForSqlObject($AlterTable),
                 $adapter::QUERY_MODE_EXECUTE
@@ -173,7 +201,7 @@ class DB extends Metadata
         $COLUMNS['pay_time']->setNullable(true);
         
         // Common constraints
-        $CONSTRAINTS['id_primarykey'] = new Constraint\PrimaryKey('id','id_primarykey');
+        $CONSTRAINTS['id_primarykey'] = new Constraint\PrimaryKey('id');
         
         
         /**
@@ -255,7 +283,8 @@ class DB extends Metadata
         $table_Merchant['column'][4]->setNullable(true);
         $table_Merchant['column'][5]->setNullable(true);
         $table_Merchant['constraint'] = array(
-            $CONSTRAINTS['id_primarykey']
+            $CONSTRAINTS['id_primarykey'],
+            new Constraint\UniqueKey(array('name'),'name_UniqueKey')
         );
         $this->create_table( 'merchant', $table_Merchant);
         
