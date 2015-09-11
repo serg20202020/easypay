@@ -17,6 +17,9 @@ use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 use Zend\Authentication\AuthenticationService;
 use Zend\Config\Config;
 
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\RowGateway\RowGateway;
+
 class Module
 {
     public function onBootstrap(MvcEvent $e)
@@ -116,7 +119,6 @@ class Module
                     
                     $auth = new AuthenticationService();
                     if ($auth->hasIdentity()) {
-                        
                         if ($auth->getIdentity() === 'Administrator') $role = new Role\Adminitrator();
                         elseif ($auth->getIdentity() === 'Staff') $role = new Role\Staff();
                         
@@ -140,12 +142,47 @@ class Module
                         
                         $MerchantID = null;
                         
-                        $config = $sm->get('Config');
-                        
                         @session_start();
                         if (isset($_SESSION['Merchant']) && !empty($_SESSION['Merchant'])){
                             
-                            if ($_SERVER['REMOTE_ADDR'] == $_SESSION['Merchant']['ip']) $MerchantID = $_SESSION['Merchant']['token'];
+                            if ($_SERVER['REMOTE_ADDR'] == $_SESSION['Merchant']['ip']){
+                                
+                                if (isset($_SESSION['Merchant']['id']) && !empty($_SESSION['Merchant']['id'])){
+                                    
+                                    // Get MerchantID from Session Cache
+                                    $MerchantID = $_SESSION['Merchant']['id'];
+                                }else{
+                                    
+                                    // Get MerchantID from DB by Merchant token(name)
+                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    
+                                    $tableGateway = new TableGateway('merchant',$dbAdapter);
+                                    
+                                    $rs = $tableGateway->select(array('name'=>$_SESSION['Merchant']['token']));
+                                    
+                                    if ($rs->count() > 0){
+                                        $data = $rs->current();
+                                    
+                                        $MerchantID = $data['id'];
+                                    
+                                    }else{
+                                    
+                                        // 添加一个商家记录
+                                        $rs_id = $tableGateway->insert(array(
+                                            'name'=>$_SESSION['Merchant']['token'],
+                                        ));
+                                    
+                                        if ($rs_id){
+                                            $MerchantID = $rs_id;
+                                        }else{
+                                            throw new \Exception('Db Error !');
+                                        }
+                                    
+                                    }
+                                    
+                                }
+                                
+                            }
                             
                         }
                         

@@ -19,6 +19,9 @@ use Zend\Db\Sql\Ddl\Column;
 use Zend\Db\Sql\Ddl\Constraint;
 use Zend\Db\Sql\Sql;
 
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\RowGateway\RowGateway;
+
 
 class IndexController extends AclController
 {
@@ -71,6 +74,16 @@ class IndexController extends AclController
         
         
         $test_table_name = 'test';
+        
+        $tableGateway = new TableGateway('merchant',$adapter);
+        $rs =  $tableGateway->select(array('name'=>'sdfsd'));
+        echo $rs->count();
+        
+        
+        $GetClientMerchantID = $this->getServiceLocator()->get('GetClientMerchantID');
+        $MerchantID = $GetClientMerchantID();
+        
+        echo $MerchantID.'============';
         
         /*
         $tablenames = $metadata->getTableNames();
