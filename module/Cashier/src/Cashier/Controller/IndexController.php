@@ -22,7 +22,7 @@ class IndexController extends BaseController
      */
     public function indexAction()
     {
-        if (!$this->verifyRequest()){
+        if ($this->verifyRequest()){
             
             
             $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
@@ -49,7 +49,7 @@ class IndexController extends BaseController
             $merchant_validator = new \Zend\Validator\Db\NoRecordExists(
                 array(
                     'table'   => 'merchant',
-                    'field'   => 'id',
+                    'field'   => 'name',
                     'adapter' => $dbAdapter
                 )
             );
@@ -61,7 +61,9 @@ class IndexController extends BaseController
             /**
              * Check if there is an exsist trade.
              */
-            $trade = $this->getTrade(intval($parameters['merchant']),trim($parameters['trade']));
+            $GetMerchantIdByName = $this->getServiceLocator()->get('GetMerchantIdByName');
+            $merchant_id = $GetMerchantIdByName($parameters['merchant']);
+            $trade = $this->getTrade($merchant_id,trim($parameters['trade']));
             
             $trade_id = null;
             $payment_interface_type = null;
@@ -90,7 +92,7 @@ class IndexController extends BaseController
                 $tableGateway = new TableGateway('trade', $dbAdapter, new Feature\RowGatewayFeature('id'));
                 
                 $tableGateway->insert(array(
-                    'merchant_id'=>intval($parameters['merchant']),
+                    'merchant_id'=>$merchant_id,
                     'merchant_trade_id'=>trim($parameters['trade']),
                     'redirect_url'=>trim($parameters['redirect_url']),
                     'notify_url'=>trim($parameters['notify_url']),
@@ -105,11 +107,15 @@ class IndexController extends BaseController
             
             return array(
                 'price'=>trim($parameters['price']),
-                'merchant'=>intval($parameters['merchant']),
+                'merchant'=>$parameters['merchant'],
                 'trade'=>trim($parameters['trade']),
                 'selected_payment' =>$payment_interface_type, 
             );
 
+        }else{
+            
+            throw new \Exception('Bad Reaquest !');
+            
         }
         
     }
@@ -123,8 +129,10 @@ class IndexController extends BaseController
         $data = array();
         $post = $this->request->getPost();
         
+        $GetMerchantIdByName = $this->getServiceLocator()->get('GetMerchantIdByName');
+        $merchant_id = $GetMerchantIdByName($post['merchant']);
             
-        $row = $this->getTrade($post['merchant'], $post['trade']);
+        $row = $this->getTrade($merchant_id, $post['trade']);
         
         $payment_interface_type = array(
             'alipay'=>'alipay',
@@ -135,7 +143,7 @@ class IndexController extends BaseController
         if ( !$this->request->isPost() || !isset($payment_interface_type[$post['payment_method']]) || empty($row) ){
             
             $data['status'] = 'false';
-            $data['error'] = 'Invalid request.';
+            $data['error'] = 'Invalid request.'.var_export($row,true);
             
         }else{
             
@@ -163,14 +171,14 @@ class IndexController extends BaseController
      * @throws \Exception
      * @return Ambigous <\Zend\Db\ResultSet\array, ArrayObject, \Zend\Db\ResultSet\null>|NULL
      */
-    private function getTrade($merchant,$trade) {
+    private function getTrade($merchantID,$trade) {
         
         $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         
         $tableGateway = new TableGateway('trade', $dbAdapter, new Feature\RowGatewayFeature('id'));
         
         $rs = $tableGateway->select(array(
-            'merchant_id'=>$merchant,
+            'merchant_id'=>$merchantID,
             'merchant_trade_id'=>$trade,
         ));
         

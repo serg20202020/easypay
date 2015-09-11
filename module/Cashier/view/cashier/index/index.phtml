@@ -35,7 +35,7 @@ $(document).ready(function($){
 			   type: "POST",
 			   dataType:"json",
 			   url: "<?php echo $this->url('cashier/setpayment') ?>",
-			   data: {merchant:<?php echo $this->merchant; ?>,trade:'<?php echo $this->trade; ?>',payment_method:payment_method},
+			   data: {merchant:"<?php echo $this->merchant; ?>",trade:"<?php echo $this->trade; ?>",payment_method:payment_method},
 			   success:function(data){
 					console.log(data);
 

@@ -27,7 +27,13 @@ class BaseController extends AclController
        $remote_sign = '';
        $apikey = $config['apikey'];
        
-       foreach ($this->getRequest()->getQuery() as $k=>$v){
+       $arrayData = $this->getRequest()->getQuery()->toArray();
+       
+       // sort the params
+       ksort($arrayData);
+       reset($arrayData);
+       
+       foreach ($arrayData as $k=>$v){
            if ($k === 'sign'){
                $remote_sign = $v;
            }else{
@@ -37,8 +43,8 @@ class BaseController extends AclController
        }
        
        if (!empty($sign)) $sign = $sign.'&';
-       $sign = $sign.'key='.$apikey;
-       $maded_sign = md5($sign);
+       $sign = $sign.'apikey='.$apikey;
+       $maded_sign = md5($sign);echo $maded_sign;
        if ($remote_sign === $maded_sign) return true;
        else return false;
        

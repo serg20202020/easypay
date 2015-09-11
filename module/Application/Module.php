@@ -154,31 +154,10 @@ class Module
                                 }else{
                                     
                                     // Get MerchantID from DB by Merchant token(name)
-                                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                                    $GetMerchantIdByName = $sm->get('GetMerchantIdByName');
+                                    $MerchantID = $GetMerchantIdByName($_SESSION['Merchant']['token']);
                                     
-                                    $tableGateway = new TableGateway('merchant',$dbAdapter);
-                                    
-                                    $rs = $tableGateway->select(array('name'=>$_SESSION['Merchant']['token']));
-                                    
-                                    if ($rs->count() > 0){
-                                        $data = $rs->current();
-                                    
-                                        $MerchantID = $data['id'];
-                                    
-                                    }else{
-                                    
-                                        // 添加一个商家记录
-                                        $rs_id = $tableGateway->insert(array(
-                                            'name'=>$_SESSION['Merchant']['token'],
-                                        ));
-                                    
-                                        if ($rs_id){
-                                            $MerchantID = $rs_id;
-                                        }else{
-                                            throw new \Exception('Db Error !');
-                                        }
-                                    
-                                    }
+                                    $_SESSION['Merchant']['id'] = $MerchantID;
                                     
                                 }
                                 
@@ -186,11 +165,46 @@ class Module
                             
                         }
                         
-                        
                         return $MerchantID;
                         
                     };
                     
+                },
+                
+                'GetMerchantIdByName'=>function ($sm){
+                    return function ($name) use ($sm){
+                        
+                        $MerchantID = null;
+                        
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        
+                        $tableGateway = new TableGateway('merchant',$dbAdapter);
+                        
+                        $rs = $tableGateway->select(array('name'=>$name));
+                        
+                        if ($rs->count() > 0){
+                            $data = $rs->current();
+                        
+                            $MerchantID = $data['id'];
+                        
+                        }else{
+                        
+                            // 添加一个商家记录
+                            $rs_id = $tableGateway->insert(array(
+                                'name'=>$name,
+                            ));
+                        
+                            if ($rs_id){
+                                $MerchantID = $rs_id;
+                            }else{
+                                throw new \Exception('Db Error !');
+                            }
+                        
+                        }
+                        
+                        return $MerchantID;
+                        
+                    };
                 },
                 
                 'SiteIsInstalled'=> function (){
