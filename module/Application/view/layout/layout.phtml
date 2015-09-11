@@ -26,8 +26,15 @@
         
         
 
-    </head>
-    <body>
+    </head><?php 
+    @session_start();
+    $is_merchant_page = false;
+    if (isset($_SESSION['Merchant']) && !empty($_SESSION['Merchant'])){
+        $is_merchant_page = true;
+    }
+    ?>
+    <body<?php if ($is_merchant_page) { echo ' style="padding-top:10px;"';} ?>>
+        <?php if (!$is_merchant_page){ ?>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -52,6 +59,7 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
+        <?php } ?>
         <div class="container">
             <?php echo $this->content; ?>
             <hr>

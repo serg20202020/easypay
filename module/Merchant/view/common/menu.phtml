@@ -1,6 +1,7 @@
-<ul>
-    <li><a href="<?php echo $this->url('merchant/setting') ?>">提现方式设置</a></li>
-    <li><a href="<?php echo $this->url('merchant/withdraw',array('action'=>'add')) ?>">我要提现</a></li>
-    <li><a href="<?php echo $this->url('merchant/withdraw_paginator') ?>">提现单管理</a></li>
-    <li><a href="<?php echo $this->url('merchant/trade_paginator') ?>">交易单管理</a></li>
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="<?php echo $this->url('merchant') ?>">总览</a></li>
+  <li role="presentation"><a href="<?php echo $this->url('merchant/setting') ?>">提现方式设置</a></li>
+  <li role="presentation"><a href="<?php echo $this->url('merchant/withdraw',array('action'=>'add')) ?>">我要提现</a></li>
+  <li role="presentation"><a href="<?php echo $this->url('merchant/withdraw_paginator') ?>">提现单管理</a></li>
+  <li role="presentation"><a href="<?php echo $this->url('merchant/trade_paginator') ?>">交易单管理</a></li>
 </ul>

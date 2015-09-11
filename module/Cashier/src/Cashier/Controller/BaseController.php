@@ -44,7 +44,7 @@ class BaseController extends AclController
        
        if (!empty($sign)) $sign = $sign.'&';
        $sign = $sign.'apikey='.$apikey;
-       $maded_sign = md5($sign);echo $maded_sign;
+       $maded_sign = md5($sign);
        if ($remote_sign === $maded_sign) return true;
        else return false;
        
