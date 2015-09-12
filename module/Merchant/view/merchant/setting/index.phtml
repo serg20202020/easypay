@@ -1,25 +1,30 @@
 <?php echo $this->menu; ?>
 
-<h4><?php echo $this->translate('Setting up the merchant info.');?></h4>
-<?php
-$form = $this->form;
-$form->get('alipay_account')->setLabel($this->translate('Alipay Account'));
-$form->get('bank_type')->setLabel($this->translate('Bank Name'));
-$form->get('bank_account_name')->setLabel($this->translate('Bank Account Name'));
-$form->get('bank_account_card')->setLabel($this->translate('Bank Account Card'));
-$form->get('submit')->setAttributes(array(
-    'value' => $this->translate('Save'),
-    'id' => 'submitbutton',
-));
-$form->prepare();
 
+<div class="merchant_contentbox">
 
-echo $this->form()->openTag($form);
-?>
-
-<div><?php echo $this->formRow($form->get('alipay_account')); ?></div>
-<div><?php echo $this->formRow($form->get('bank_type')); ?></div>
-<div><?php echo $this->formRow($form->get('bank_account_name')); ?></div>
-<div><?php echo $this->formRow($form->get('bank_account_card')); ?></div>
-<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
-<?php echo $this->form()->closeTag(); ?>
+    <h4><?php echo $this->translate('Setting up the merchant info.');?></h4>
+    <?php
+    $form = $this->form;
+    $form->get('alipay_account')->setLabel($this->translate('Alipay Account'));
+    $form->get('bank_type')->setLabel($this->translate('Bank Name'));
+    $form->get('bank_account_name')->setLabel($this->translate('Bank Account Name'));
+    $form->get('bank_account_card')->setLabel($this->translate('Bank Account Card'));
+    $form->get('submit')->setAttributes(array(
+        'value' => $this->translate('Save'),
+        'id' => 'submitbutton',
+    ));
+    $form->prepare();
+    
+    
+    echo $this->form()->openTag($form);
+    ?>
+    
+    <div><?php echo $this->formRow($form->get('alipay_account')); ?></div>
+    <div><?php echo $this->formRow($form->get('bank_type')); ?></div>
+    <div><?php echo $this->formRow($form->get('bank_account_name')); ?></div>
+    <div><?php echo $this->formRow($form->get('bank_account_card')); ?></div>
+    <div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+    <?php echo $this->form()->closeTag(); ?>
+    
+</div>

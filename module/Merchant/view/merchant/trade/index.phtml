@@ -1,34 +1,36 @@
 <?php echo $this->menu; ?>
 
+<div class="merchant_contentbox">
 
+    <?php if (count($this->paginator)): ?>
+    
+    <?php echo $this->paginationControl($this->paginator,
+                                        'Sliding',
+                                        'widget/pagination-control', array('route' => 'merchant/trade_paginator')); ?>
+    
+    <ul>
+    <?php foreach ($this->paginator as $item): ?>
+      <li>
+        <div>编号:<?php echo $item['id']; ?></div>
+        <div>商家id:<?php echo $item['merchant_id']; ?></div>
+        <div>商家订单号方式:<?php echo $item['merchant_trade_id']; ?></div>
+        <div>支付接口类型:<?php echo $item['payment_interface_type']; ?></div>
+        <div>支付交易号:<?php echo $item['payment_interface_trade_id']; ?></div>
+        <div>通知地址:<?php echo $item['redirect_url']; ?></div>
+        <div>跳转地址:<?php echo $item['notify_url']; ?></div>
+        <div>金额:<?php echo $item['price']; ?></div>
+        <div>申请时间:<?php echo $item['create_time']; ?></div>
+        <div>处理时间:<?php echo $item['pay_time']; ?></div>
+        <div>处理状态:<?php echo $item['pay_status']; ?></div>
+      </li>
+    <?php endforeach; ?>
+    </ul>
+    
+    
+    <?php echo $this->paginationControl($this->paginator,
+                                        'Sliding',
+                                        'widget/pagination-control', array('route' => 'merchant/trade_paginator')); ?>
+    
+    <?php endif; ?>
 
-<?php if (count($this->paginator)): ?>
-
-<?php echo $this->paginationControl($this->paginator,
-                                    'Sliding',
-                                    'widget/pagination-control', array('route' => 'merchant/trade_paginator')); ?>
-
-<ul>
-<?php foreach ($this->paginator as $item): ?>
-  <li>
-    <div>编号:<?php echo $item['id']; ?></div>
-    <div>商家id:<?php echo $item['merchant_id']; ?></div>
-    <div>商家订单号方式:<?php echo $item['merchant_trade_id']; ?></div>
-    <div>支付接口类型:<?php echo $item['payment_interface_type']; ?></div>
-    <div>支付交易号:<?php echo $item['payment_interface_trade_id']; ?></div>
-    <div>通知地址:<?php echo $item['redirect_url']; ?></div>
-    <div>跳转地址:<?php echo $item['notify_url']; ?></div>
-    <div>金额:<?php echo $item['price']; ?></div>
-    <div>申请时间:<?php echo $item['create_time']; ?></div>
-    <div>处理时间:<?php echo $item['pay_time']; ?></div>
-    <div>处理状态:<?php echo $item['pay_status']; ?></div>
-  </li>
-<?php endforeach; ?>
-</ul>
-
-
-<?php echo $this->paginationControl($this->paginator,
-                                    'Sliding',
-                                    'widget/pagination-control', array('route' => 'merchant/trade_paginator')); ?>
-
-<?php endif; ?>
+</div>
