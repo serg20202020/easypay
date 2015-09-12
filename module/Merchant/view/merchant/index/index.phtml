@@ -8,11 +8,11 @@
 
 <h4><?php echo $this->translate('Welcome to Easypay Merchant Center !'); ?></h4>
 
-<p><?php echo $this->translate('Totle Income:'); ?> 4545.50</p>
-<p><?php echo $this->translate('Free Income:'); ?> 3545.50</p>
-<p><?php echo $this->translate('Withdrawed Income:'); ?> 2000.00</p>
-<p><?php echo $this->translate('Effective Income:'); ?> 1545.50</p>
-<p><?php echo $this->translate('Trade:'); ?> 34/50</p>
-<p><?php echo $this->translate('Withdraw Request:'); ?> 5/6</p>
+<p><label><?php echo $this->translate('Totle Income:'); ?></label> <?php echo $this->currencyFormat($this->TotleIncome,'RMB', null, 'zh_cn'); ?></p>
+<p><label><?php echo $this->translate('Free Income:'); ?></label> <?php echo $this->currencyFormat($this->FreeIncome,'RMB', null, 'zh_cn'); ?></p>
+<p><label><?php echo $this->translate('Withdrawed Income:'); ?></label> <?php echo $this->currencyFormat($this->WithdrawedIncome,'RMB', null, 'zh_cn'); ?></p>
+<p><label><?php echo $this->translate('Effective Income:'); ?></label> <?php echo $this->currencyFormat($this->FreeIncome-$this->WithdrawedIncome,'RMB', null, 'zh_cn'); ?></p>
+<p><label><?php echo $this->translate('Trade:'); ?></label> <?php echo $this->TradePayed; ?> / <?php echo $this->TradeAll; ?> (<?php echo $this->translate('Paid / Total'); ?>)</p>
+<p><label><?php echo $this->translate('Withdraw Request:'); ?></label> <?php echo $this->WithdrawPayed; ?> / <?php echo $this->WithdrawAll; ?>  (<?php echo $this->translate('Paid / Total'); ?>)</p>
 
 </div>

@@ -116,7 +116,6 @@ class DB extends Metadata
                 $sql->getSqlStringForSqlObject($CreateTable),
                 $adapter::QUERY_MODE_EXECUTE
             );
-            echo $sql->getSqlStringForSqlObject($CreateTable);
     
         }else{
     
