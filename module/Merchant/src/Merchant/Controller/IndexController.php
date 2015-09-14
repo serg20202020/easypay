@@ -9,6 +9,7 @@
 
 namespace Merchant\Controller;
 use Zend\View\Model\ViewModel;
+use Merchant\Model\Report;
 
 
 
@@ -19,100 +20,11 @@ class IndexController extends BaseController
         $this->appendTitle($this->translate('Merchant workbench'));
         
         
-        // Count total 
-        $TotleIncome = null;
-        $FreeIncome = null;
-        $WithdrawedIncome = null;
-        $EffectiveIncome = null;
-        $TradeAll = null;
-        $TradePayed = null;
-        $WithdrawAll = null;
-        $WithdrawPayed = null;
+        // Load Report.
+        $report = new Report($this->getServiceLocator());
+        $report_array = $report->load();
         
-        $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $GetClientMerchantID = $this->getServiceLocator()->get('GetClientMerchantID');
-        $MerchantID = $GetClientMerchantID();
-        
-        $rs_TotleIncome = $dbAdapter->query(
-            'SELECT sum(`price`) as sum FROM `trade` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1',
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        $rs_FreeIncome = $dbAdapter->query(
-            'SELECT sum(`price`) as sum FROM `trade` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1 AND `pay_time` < DATE_SUB(now(),INTERVAL 1 DAY)',
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        $rs_WithdrawedIncome = $dbAdapter->query(
-            'SELECT sum(`price`) as sum FROM `withdraw` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1',
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        $rs_TradeAll = $dbAdapter->query(
-            'SELECT count(*) as count FROM `trade` WHERE `merchant_id`='.$MerchantID,
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        $rs_TradePayed = $dbAdapter->query(
-            'SELECT count(*) as count FROM `trade` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1',
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        $rs_WithdrawAll = $dbAdapter->query(
-            'SELECT count(*) as count FROM `withdraw` WHERE `merchant_id`='.$MerchantID,
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        $rs_WithdrawPayed = $dbAdapter->query(
-            'SELECT count(*) as count FROM `withdraw` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1',
-            $dbAdapter::QUERY_MODE_EXECUTE
-        );
-        
-        if ($rs_TotleIncome->count() > 0){
-            $row = $rs_TotleIncome->current();
-            $TotleIncome = $row['sum'];
-        }
-        
-        if ($rs_FreeIncome->count() > 0){
-            $row = $rs_FreeIncome->current();
-            $FreeIncome = $row['sum'];
-        }
-        
-        if ($rs_WithdrawedIncome->count() > 0){
-            $row = $rs_WithdrawedIncome->current();
-            $WithdrawedIncome = $row['sum'];
-        }
-        
-        if ($rs_TradeAll->count() > 0){
-            $row = $rs_TradeAll->current();
-            $TradeAll = $row['count'];
-        }
-        
-        if ($rs_TradePayed->count() > 0){
-            $row = $rs_TradePayed->current();
-            $TradePayed = $row['count'];
-        }
-        
-        if ($rs_WithdrawAll->count() > 0){
-            $row = $rs_WithdrawAll->current();
-            $WithdrawAll = $row['count'];
-        }
-        
-        if ($rs_WithdrawPayed->count() > 0){
-            $row = $rs_WithdrawPayed->current();
-            $WithdrawPayed = $row['count'];
-        }
-        
-        $view_page = new ViewModel(array(
-            'TotleIncome'=>$TotleIncome,
-            'FreeIncome'=>$FreeIncome,
-            'WithdrawedIncome'=>$WithdrawedIncome,
-            'EffectiveIncome'=>$EffectiveIncome,
-            'TradeAll'=>$TradeAll,
-            'TradePayed'=>$TradePayed,
-            'WithdrawAll'=>$WithdrawAll,
-            'WithdrawPayed'=>$WithdrawPayed,
-        ));
+        $view_page = new ViewModel($report_array);
         
         $view_page = $this->setChildViews($view_page);
         
