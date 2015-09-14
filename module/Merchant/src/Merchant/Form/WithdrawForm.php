@@ -9,7 +9,7 @@ use Merchant\Model\Withdraw;
 class WithdrawForm extends Form
 {
 
-    function __construct()
+    function __construct( \Merchant\Model\Report $report)
     {
         parent::__construct('withdraw');
         
@@ -27,8 +27,9 @@ class WithdrawForm extends Form
         
         $this->add(array(
             'name' => 'price',
-            'type' => 'Text',
+            'type' => 'Number',
         ));
+        
         
         $this->add(array(
             'name' => 'submit',
@@ -48,7 +49,8 @@ class WithdrawForm extends Form
                                                                                     )));
         
         $input_Price = new Input('price');
-        $input_Price->getValidatorChain()->attach( new \Zend\I18n\Validator\IsFloat() );
+        $input_Price->getValidatorChain()->attach( new \Zend\I18n\Validator\IsFloat() )
+                                         ->attach( new \Zend\Validator\Between(array('min' => 100, 'max' => $report->EnableMakeWithdraw)) );
         
         $input_filter = new InputFilter();
         $input_filter->add($input_WithdrawType);

@@ -44,11 +44,13 @@ class WithdrawController extends BaseController
     {
         $this->appendTitle($this->translate('Withdraw'));
         
-        $form = new Form\WithdrawForm();
+        $withdraw = new Withdraw($this->getServiceLocator());
+        $form = new Form\WithdrawForm($withdraw->report);
         $vars = array('form'=>$form);
         
-        $withdraw = new Withdraw($this->getServiceLocator());
         $form->bind($withdraw);
+        
+        $vars['report'] = $withdraw->report;
         
         $request = $this->getRequest();
         if ($request->isPost()) {

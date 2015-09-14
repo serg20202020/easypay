@@ -14,6 +14,7 @@ class Report
     public $TradePayed = null;
     public $WithdrawAll = null;
     public $WithdrawPayed = null;
+    public $EnableMakeWithdraw = null;
 
     function __construct( $sl, $merchant_id = NULL )
     {
@@ -36,6 +37,7 @@ class Report
         $TradePayed = null;
         $WithdrawAll = null;
         $WithdrawPayed = null;
+        $EnableMakeWithdraw = null;
         
         $dbAdapter = $this->sl->get('Zend\Db\Adapter\Adapter');
         $GetClientMerchantID = $this->sl->get('GetClientMerchantID');
@@ -77,6 +79,11 @@ class Report
             $dbAdapter::QUERY_MODE_EXECUTE
         );
         
+        $rs_EnableMakeWithdraw = $dbAdapter->query(
+            'SELECT sum(`price`) as sum FROM `withdraw` WHERE `merchant_id`='.$MerchantID,
+            $dbAdapter::QUERY_MODE_EXECUTE
+        );
+        
         if ($rs_TotleIncome->count() > 0){
             $row = $rs_TotleIncome->current();
             $TotleIncome = $row['sum'];
@@ -112,6 +119,14 @@ class Report
             $WithdrawPayed = $row['count'];
         }
         
+        if ($rs_EnableMakeWithdraw->count() > 0){
+            $row = $rs_EnableMakeWithdraw->current();
+            $EnableMakeWithdraw = $FreeIncome - $row['sum'];
+        }else{
+            $EnableMakeWithdraw = $FreeIncome;
+        }
+        
+        
         $this->TotleIncome=$TotleIncome;
         $this->FreeIncome=$FreeIncome;
         $this->WithdrawedIncome=$WithdrawedIncome;
@@ -120,6 +135,7 @@ class Report
         $this->TradePayed=$TradePayed;
         $this->WithdrawAll=$WithdrawAll;
         $this->WithdrawPayed=$WithdrawPayed;
+        $this->EnableMakeWithdraw = $EnableMakeWithdraw;
         
         return array(
             'TotleIncome'=>$this->TotleIncome,
@@ -130,6 +146,7 @@ class Report
             'TradePayed'=>$this->TradePayed,
             'WithdrawAll'=>$this->WithdrawAll,
             'WithdrawPayed'=>$this->WithdrawPayed,
+            'EnableMakeWithdraw'=>$this->EnableMakeWithdraw,
         );
         
     }

@@ -3,10 +3,17 @@
 <div class="merchant_contentbox">
 
     <h4><?php echo $this->translate('Make an Withdraw.');?></h4>
+    
+    
+    <P><?php echo $this->translate('You can withdraw at most');?> <?php echo $this->currencyFormat($report->EnableMakeWithdraw,'RMB', null, 'zh_cn'); ?></P>
+    
     <?php
     $form = $this->form;
     $form->get('withdraw_type')->setLabel($this->translate('Withdraw Method'));
-    $form->get('price')->setLabel($this->translate('Amount'));
+    $form->get('price')->setLabel($this->translate('Amount'))->setAttributes(array(
+        'min'  => '100',
+        'max'  => $form->get('price')->getValue(),
+    ));
     $form->get('submit')->setAttributes(array(
         'value' => $this->translate('Submit'),
         'id' => 'submitbutton',
