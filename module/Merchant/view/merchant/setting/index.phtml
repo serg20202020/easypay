@@ -3,7 +3,7 @@
 
 <div class="merchant_contentbox">
 
-    <h4><?php echo $this->translate('Setting up the merchant info.');?></h4>
+    <h4 class="text-center"><?php echo $this->translate('Setting up the merchant info.');?></h4>
     <?php
     $form = $this->form;
     $form->get('alipay_account')->setLabel($this->translate('Alipay Account'));
@@ -17,14 +17,40 @@
     $form->prepare();
     
     
-    echo $this->form()->openTag($form);
+    echo $this->form()->openTag($form->setAttribute('class','form-horizontal'));
     ?>
     
-    <div><?php echo $this->formRow($form->get('alipay_account')); ?></div>
-    <div><?php echo $this->formRow($form->get('bank_type')); ?></div>
-    <div><?php echo $this->formRow($form->get('bank_account_name')); ?></div>
-    <div><?php echo $this->formRow($form->get('bank_account_card')); ?></div>
-    <div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+    <div class="form-group">
+        <?php echo $this->formlabel($form->get('alipay_account')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+        <div class="col-sm-9 col-lg-10">
+            <?php echo $this->formText($form->get('alipay_account')->setAttribute('class','form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formlabel($form->get('bank_type')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+        <div class="col-sm-9 col-lg-10">
+            <?php echo $this->formText($form->get('bank_type')->setAttribute('class','form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formlabel($form->get('bank_account_name')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+        <div class="col-sm-9 col-lg-10">
+            <?php echo $this->formText($form->get('bank_account_name')->setAttribute('class','form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formlabel($form->get('bank_account_card')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+        <div class="col-sm-9 col-lg-10">
+            <?php echo $this->formText($form->get('bank_account_card')->setAttribute('class','form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9 col-lg-offset-2 col-lg-10">
+        <?php echo $this->formSubmit($form->get('submit')->setAttributes(array(
+            'class' => 'form-control btn btn-default'
+        ))); ?>
+        </div>
+    </div>
     <?php echo $this->form()->closeTag(); ?>
     
 </div>

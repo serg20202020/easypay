@@ -1,0 +1,139 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZendSkeletonApplication\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-14 17:15+0800\n"
+"PO-Revision-Date: 2015-09-14 17:21+0800\n"
+"Last-Translator: Evan Coury <me@evancoury.com>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.1\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Merchant/Controller/IndexController.php:20
+msgid "Merchant workbench"
+msgstr "商家工作台"
+
+#: ../src/Merchant/Controller/SettingController.php:24
+msgid "Withdraw account setting"
+msgstr "提现帐号设置"
+
+#: ../src/Merchant/Controller/TradeController.php:24
+msgid "Trade query"
+msgstr "交易单查询"
+
+#: ../src/Merchant/Controller/WithdrawController.php:21
+msgid "Withdraw query"
+msgstr "提现单查询"
+
+#: ../src/Merchant/Controller/WithdrawController.php:45
+msgid "Withdraw"
+msgstr "提现"
+
+#: ../view/merchant/index/index.phtml:9
+msgid "Welcome to Easypay Merchant Center !"
+msgstr "欢迎来到Easypay商家中心"
+
+#: ../view/merchant/index/index.phtml:12
+msgid "Totle Income:"
+msgstr "总收入："
+
+#: ../view/merchant/index/index.phtml:13
+msgid "Free Income:"
+msgstr "自由的收入："
+
+#: ../view/merchant/index/index.phtml:14
+msgid "Withdrawed Income:"
+msgstr "已提现总金额："
+
+#: ../view/merchant/index/index.phtml:15
+msgid "Effective Income:"
+msgstr "实际有效的收效："
+
+#: ../view/merchant/index/index.phtml:16
+msgid "Trade:"
+msgstr "交易单："
+
+#: ../view/merchant/index/index.phtml:16 ../view/merchant/index/index.phtml:17
+msgid "Paid / Total"
+msgstr "已支付 / 总数"
+
+#: ../view/merchant/index/index.phtml:17
+msgid "Withdraw Request:"
+msgstr "提现请求："
+
+#: ../view/merchant/setting/index.phtml:6
+msgid "Setting up the merchant info."
+msgstr "设置商家信息"
+
+#: ../view/merchant/setting/index.phtml:9
+msgid "Alipay Account"
+msgstr "支付宝帐号"
+
+#: ../view/merchant/setting/index.phtml:10
+msgid "Bank Name"
+msgstr "银行名称"
+
+#: ../view/merchant/setting/index.phtml:11
+msgid "Bank Account Name"
+msgstr "银行帐号名称"
+
+#: ../view/merchant/setting/index.phtml:12
+msgid "Bank Account Card"
+msgstr "银行卡号"
+
+#: ../view/merchant/setting/index.phtml:14
+msgid "Save"
+msgstr "保存"
+
+#: ../view/merchant/withdraw/add.phtml:5
+msgid "Make an Withdraw."
+msgstr "提交一个提现申请。"
+
+#: ../view/merchant/withdraw/add.phtml:8
+msgid "You can withdraw at most"
+msgstr "你最多可以提现"
+
+#: ../view/merchant/withdraw/add.phtml:12
+msgid "Withdraw Method"
+msgstr "提现方式"
+
+#: ../view/merchant/withdraw/add.phtml:13
+msgid "Amount"
+msgstr "金额"
+
+#: ../view/merchant/withdraw/add.phtml:18
+msgid "Submit"
+msgstr "提交"
+
+#~ msgid "Installing The UserHub System"
+#~ msgstr "正在安装 UserHub 系统"
+
+#~ msgid "Database name has not spacify!"
+#~ msgstr "数据库名没有提供！"
+
+#~ msgid "Welcome to install UserHub"
+#~ msgstr "欢迎安装UserHub系统"
+
+#~ msgid "Server"
+#~ msgstr "服务器"
+
+#~ msgid "Username"
+#~ msgstr "用户名"
+
+#~ msgid "Password"
+#~ msgstr "密码"
+
+#~ msgid "Database"
+#~ msgstr "数据库"
+
+#~ msgid "Install Now !"
+#~ msgstr "马上安装！"
+
+#~ msgid "if it's not exsist, we will try to create one."
+#~ msgstr "如果它不存在，我们将会尝试新建一个。"

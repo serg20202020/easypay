@@ -2,10 +2,10 @@
 
 <div class="merchant_contentbox">
 
-    <h4><?php echo $this->translate('Make an Withdraw.');?></h4>
+    <h4 class="text-center"><?php echo $this->translate('Make an Withdraw.');?></h4>
     
     
-    <P><?php echo $this->translate('You can withdraw at most');?> <?php echo $this->currencyFormat($report->EnableMakeWithdraw,'RMB', null, 'zh_cn'); ?></P>
+    <P class="bg-warning" style="padding: 20px; font-size:medium;"><?php echo $this->translate('You can withdraw at most');?> <span style="font-weight: bold; font-style: italic;"><?php echo $this->currencyFormat($report->EnableMakeWithdraw,'RMB', null, 'zh_cn'); ?></span></P>
     
     <?php
     $form = $this->form;
@@ -21,12 +21,29 @@
     $form->prepare();
     
     
-    echo $this->form()->openTag($form);
+    echo $this->form()->openTag($form->setAttribute('class','form-horizontal'));
     ?>
     
-    <div><?php echo $this->formRow($form->get('withdraw_type')); ?></div>
-    <div><?php echo $this->formRow($form->get('price')); ?></div>
-    <div><?php echo $this->formSubmit($form->get('submit')); ?></div>
+    <div class="form-group">
+        <?php echo $this->formlabel($form->get('withdraw_type')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+        <div class="col-sm-9 col-lg-10">
+            <?php echo $this->formselect($form->get('withdraw_type')->setAttribute('class','form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formlabel($form->get('price')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+        <div class="col-sm-9 col-lg-10">
+            <?php echo $this->formnumber($form->get('price')->setAttribute('class','form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9 col-lg-offset-2 col-lg-10">
+        <?php echo $this->formSubmit($form->get('submit')->setAttributes(array(
+            'class' => 'form-control btn btn-default'
+        ))); ?>
+        </div>
+    </div>
+    
     <?php echo $this->form()->closeTag(); ?>
 
 </div>
