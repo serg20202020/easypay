@@ -37,8 +37,8 @@ class Report
         $WithdrawAll = null;
         $WithdrawPayed = null;
         
-        $dbAdapter = $this->sl->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $GetClientMerchantID = $this->sl->getServiceLocator()->get('GetClientMerchantID');
+        $dbAdapter = $this->sl->get('Zend\Db\Adapter\Adapter');
+        $GetClientMerchantID = $this->sl->get('GetClientMerchantID');
         if (!empty($this->MerchantID)) $MerchantID = $this->MerchantID;
         else $MerchantID = $GetClientMerchantID();
         
@@ -112,14 +112,14 @@ class Report
             $WithdrawPayed = $row['count'];
         }
         
-            $this->TotleIncome=$TotleIncome;
-            $this->FreeIncome=$FreeIncome;
-            $this->WithdrawedIncome=$WithdrawedIncome;
-            $this->EffectiveIncome=$FreeIncome-$WithdrawedIncome;
-            $this->TradeAll=$TradeAll;
-            $this->TradePayed=$TradePayed;
-            $this->WithdrawAll=$WithdrawAll;
-            $this->WithdrawPayed=$WithdrawPayed;
+        $this->TotleIncome=$TotleIncome;
+        $this->FreeIncome=$FreeIncome;
+        $this->WithdrawedIncome=$WithdrawedIncome;
+        $this->EffectiveIncome=$FreeIncome-$WithdrawedIncome;
+        $this->TradeAll=$TradeAll;
+        $this->TradePayed=$TradePayed;
+        $this->WithdrawAll=$WithdrawAll;
+        $this->WithdrawPayed=$WithdrawPayed;
         
         return array(
             'TotleIncome'=>$this->TotleIncome,
