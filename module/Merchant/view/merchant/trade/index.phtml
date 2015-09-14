@@ -8,24 +8,34 @@
                                         'Sliding',
                                         'widget/pagination-control', array('route' => 'merchant/trade_paginator')); ?>
     
-    <ul>
-    <?php foreach ($this->paginator as $item): ?>
-      <li>
-        <div>编号:<?php echo $item['id']; ?></div>
-        <div>商家id:<?php echo $item['merchant_id']; ?></div>
-        <div>商家订单号方式:<?php echo $item['merchant_trade_id']; ?></div>
-        <div>支付接口类型:<?php echo $item['payment_interface_type']; ?></div>
-        <div>支付交易号:<?php echo $item['payment_interface_trade_id']; ?></div>
-        <div>通知地址:<?php echo $item['redirect_url']; ?></div>
-        <div>跳转地址:<?php echo $item['notify_url']; ?></div>
-        <div>金额:<?php echo $item['price']; ?></div>
-        <div>申请时间:<?php echo $item['create_time']; ?></div>
-        <div>处理时间:<?php echo $item['pay_time']; ?></div>
-        <div>处理状态:<?php echo $item['pay_status']; ?></div>
-      </li>
-    <?php endforeach; ?>
-    </ul>
-    
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>商家订单号</th>
+                <th>支付接口类型</th>
+                <th>支付交易号</th>
+                <th>金额</th>
+                <th>创建时间</th>
+                <th>支付时间</th>
+                <th>支付状态</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->paginator as $item): ?>
+              <tr>
+                <td><?php echo $item['id']; ?></td>
+                <td><?php echo $item['merchant_trade_id']; ?></td>
+                <td><?php echo $item['payment_interface_type']; ?></td>
+                <td><?php if ($item['payment_interface_trade_id']) echo $item['payment_interface_trade_id'];else echo 'N/A'; ?></td>
+                <td><?php echo $item['price']; ?></td>
+                <td><?php echo $item['create_time']; ?></td>
+                <td><?php if ($item['pay_time']) echo $item['pay_time'];else echo 'N/A'; ?></td>
+                <td><?php if ($item['pay_status']) echo '<span style="color:green;">已支付</span>'; else echo '<span style="color:red;">未支付</span>'; ?></td>
+              </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
     
     <?php echo $this->paginationControl($this->paginator,
                                         'Sliding',

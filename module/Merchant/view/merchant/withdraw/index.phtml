@@ -8,20 +8,32 @@
                                         'Sliding',
                                         'widget/pagination-control', array('route' => 'merchant/withdraw_paginator')); ?>
     
-    <ul>
-    <?php foreach ($this->paginator as $item): ?>
-      <li>
-        <div>编号:<?php echo $item['id']; ?></div>
-        <div>商家id:<?php echo $item['merchant_id']; ?></div>
-        <div>提现方式:<?php echo $item['withdraw_type']; ?></div>
-        <div>提现交易号:<?php echo $item['withdraw_interface_trade_id']; ?></div>
-        <div>金额:<?php echo $item['price']; ?></div>
-        <div>申请时间:<?php echo $item['create_time']; ?></div>
-        <div>处理时间:<?php echo $item['pay_time']; ?></div>
-        <div>处理状态:<?php echo $item['pay_status']; ?></div>
-      </li>
-    <?php endforeach; ?>
-    </ul>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>申请时间</th>
+                <th>提现方式</th>
+                <th>金额</th>
+                <th>提现交易号</th>
+                <th>处理时间</th>
+                <th>处理状态</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->paginator as $item): ?>
+          <tr>
+            <td><?php echo $item['id']; ?></td>
+            <td><?php echo $item['create_time']; ?></td>
+            <td><?php echo $item['withdraw_type']; ?></td>
+            <td><?php echo $item['price']; ?></td>
+            <td><?php if ($item['withdraw_interface_trade_id']) echo $item['withdraw_interface_trade_id'];else echo 'N/A'; ?></td>
+            <td><?php if ($item['pay_time']) echo $item['pay_time'];else echo 'N/A'; ?></td>
+            <td><?php if ($item['pay_status']) echo '<span style="color:green;">已处理</span>'; else echo '<span style="color:red;">未处理</span>'; ?></td>
+          </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
     
     
     <?php echo $this->paginationControl($this->paginator,
