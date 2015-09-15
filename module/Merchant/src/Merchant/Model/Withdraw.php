@@ -19,7 +19,7 @@ class Withdraw extends DBModel
     {
         parent::__construct($sl, 'withdraw', $id);
         
-        $this->report = new Report($sl);
+        $this->report = new Report($sl,$this->merchant_id);
         
         $this->price = $this->report->EnableMakeWithdraw;
     }
