@@ -18,7 +18,9 @@ class BaseController extends AclController
     
     protected function setChildViews(ViewModel $view_page) {
     
-        $view_menu = new ViewModel();
+        $view_menu = new ViewModel(array(
+            'RouteName'=>$this->getEvent()->getRouteMatch()->getMatchedRouteName()
+        ));
         $view_menu->setTemplate('workbench/common/menu');
         $view_page->addChild($view_menu,'menu');
     

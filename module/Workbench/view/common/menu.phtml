@@ -1,4 +1,9 @@
-<ul>
-    <li><a href="<?php echo $this->url('workbench') ?>">工作台首页</a></li>
-    <li><a href="<?php echo $this->url('workbench/withdraw_paginator') ?>">提现单管理</a></li>
+<?php
+$active = function( $test_RouteName ){
+    if ($test_RouteName ==  $this->RouteName) echo ' class="active"';
+} 
+?>
+<ul class="nav nav-tabs">
+  <li role="presentation"<?php $active('workbench'); ?>><a href="<?php echo $this->url('workbench') ?>">工作台首页</a></li>
+  <li role="presentation"<?php $active('workbench/withdraw_paginator'); ?>><a href="<?php echo $this->url('workbench/withdraw_paginator') ?>">提现单管理</a></li>
 </ul>
