@@ -32,7 +32,9 @@ class IndexController extends BaseController
         
         $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $select = new \Zend\Db\Sql\Select();
-        $select->from('withdraw');
+        $select->from('withdraw')->order(array(
+            'create_time'=>'desc',
+        ));
         
         
         $dbselect = new DbSelect($select,$dbAdapter);
@@ -40,7 +42,10 @@ class IndexController extends BaseController
         
         $paginator->setCurrentPageNumber( $this->params()->fromRoute('page') );
         
-        $vars = array('paginator'=>$paginator);
+        $vars = array(
+            'paginator'=>$paginator,
+            'sl'=>$this->serviceLocator,
+        );
         
         $view_page = new ViewModel($vars);
         $view_page = $this->setChildViews($view_page);

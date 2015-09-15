@@ -18,7 +18,6 @@ use Zend\Authentication\AuthenticationService;
 use Zend\Config\Config;
 
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\RowGateway\RowGateway;
 
 class Module
 {
@@ -204,6 +203,35 @@ class Module
                         
                         return $MerchantID;
                         
+                    };
+                },
+                
+                'GetMerchantNameByMerchantId'=>function ($sm){
+                    return function ($MerchantID = NULL) use ($sm){
+                    
+                        $MerchantName = null;
+                    
+                        if ($MerchantID){
+                            
+                            $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        
+                            $tableGateway = new TableGateway('merchant',$dbAdapter);
+                        
+                            $rs = $tableGateway->select(array('id'=>$MerchantID));
+                        
+                            if ($rs->count() > 0){
+                                $data = $rs->current();
+                        
+                                $MerchantName = $data['name'];
+                        
+                            }else{
+                                $MerchantName = '未知商家';
+                            }
+                        
+                        }
+                    
+                        return $MerchantName;
+                    
                     };
                 },
                 
