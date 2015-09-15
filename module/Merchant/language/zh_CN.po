@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 11:51+0800\n"
-"PO-Revision-Date: 2015-09-15 11:51+0800\n"
+"POT-Creation-Date: 2015-09-15 12:08+0800\n"
+"PO-Revision-Date: 2015-09-15 12:09+0800\n"
 "Last-Translator: Evan Coury <me@evancoury.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -107,19 +107,27 @@ msgstr "提交一个提现申请。"
 msgid "Withdraw Method"
 msgstr "提现方式"
 
-#: ../view/merchant/withdraw/add.phtml:10
+#: ../view/merchant/withdraw/add.phtml:11
+msgid "Alipay"
+msgstr "支付宝"
+
+#: ../view/merchant/withdraw/add.phtml:12
+msgid "BankCard"
+msgstr "银行卡"
+
+#: ../view/merchant/withdraw/add.phtml:14
 msgid "Amount"
 msgstr "金额"
 
-#: ../view/merchant/withdraw/add.phtml:15
+#: ../view/merchant/withdraw/add.phtml:19
 msgid "Submit"
 msgstr "提交"
 
-#: ../view/merchant/withdraw/add.phtml:22
+#: ../view/merchant/withdraw/add.phtml:26
 msgid "You can withdraw at most"
 msgstr "你最多可以提现"
 
-#: ../view/merchant/withdraw/add.phtml:28
+#: ../view/merchant/withdraw/add.phtml:32
 #, php-format
 msgid ""
 "You had submit a withdraw request successfully for %s ,<br>please wait till "
@@ -129,7 +137,7 @@ msgstr ""
 "你已经成功提交了一个金额为 %s 的提现请求，<br>请等待客服人员对它进行处理，"
 "<br>你也可以在%s 提现申请列表中 %s查看它的处理进度。"
 
-#: ../view/merchant/withdraw/add.phtml:33
+#: ../view/merchant/withdraw/add.phtml:37
 msgid "System Error !<br> Your Submited had failed !"
 msgstr "系统错误！<br> 你的提交的申请未能成功保存！"
 

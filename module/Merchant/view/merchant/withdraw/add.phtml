@@ -7,6 +7,10 @@
     <?php
     $form = $this->form;
     $form->get('withdraw_type')->setLabel($this->translate('Withdraw Method'));
+    $withdraw_type_ValueOption = $form->get('withdraw_type')->getValueOptions();
+    $withdraw_type_ValueOption[\Merchant\Model\Withdraw::WITHDRAW_TYPE_ALIPAY] = $this->translate('Alipay');
+    $withdraw_type_ValueOption[\Merchant\Model\Withdraw::WITHDRAW_TYPE_BANK] = $this->translate('BankCard');
+    $form->get('withdraw_type')->setValueOptions($withdraw_type_ValueOption);
     $form->get('price')->setLabel($this->translate('Amount'))->setAttributes(array(
         'min'  => '100',
         'max'  => $form->get('price')->getValue(),
