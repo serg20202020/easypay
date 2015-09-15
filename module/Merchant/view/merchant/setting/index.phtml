@@ -3,7 +3,7 @@
 
 <div class="merchant_contentbox">
 
-    <h4 class="text-center"><?php echo $this->translate('Setting up the merchant info.');?></h4>
+    <h3 class="text-center"><?php echo $this->translate('Setting up the merchant info.');?></h3>
     <?php
     $form = $this->form;
     $form->get('alipay_account')->setLabel($this->translate('Alipay Account'));
@@ -15,8 +15,26 @@
         'id' => 'submitbutton',
     ));
     $form->prepare();
+    ?>
     
     
+    <?php
+    if ($this->is_post):
+        if ($this->status):
+    ?>
+            <p class="bg-success text-center" style="padding: 10px; font-size:medium;"> <span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: Green; font-size: xx-large;"></span><br><?php echo $this->translate('Configuration save successfully !');?></p>
+    
+    <?php 
+        else:
+    ?>
+            <p class="bg-success text-center" style="padding: 10px; font-size:medium;"> <span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: Red; font-size: xx-large;"></span><br><?php echo $this->translate('System Error !<br> Configuration saved had failed !'); ?></p>
+    <?php 
+        endif;
+    endif;
+    ?>
+    
+    
+    <?php
     echo $this->form()->openTag($form->setAttribute('class','form-horizontal'));
     ?>
     

@@ -36,6 +36,7 @@ class SettingController extends BaseController
         $form->bind($setting);
         
         $request = $this->getRequest();
+        $vars['is_post'] = $request->isPost();
         if ($request->isPost()) {
         
             $post_data = $request->getPost();
@@ -44,7 +45,16 @@ class SettingController extends BaseController
         
             // Validate the form
             if ($form->isValid()) {
-                $setting->save();
+                try {
+                
+                    $r_int = $setting->save();
+                    $vars['status'] = true;
+                
+                } catch (Exception $e) {
+                
+                    $vars['status'] = false;
+                
+                }
             }
         }
         
