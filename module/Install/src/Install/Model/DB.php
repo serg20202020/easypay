@@ -10,7 +10,6 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Ddl;
 use Zend\Db\Sql\Ddl\Column;
 use Zend\Db\Sql\Ddl\Constraint;
-use Zend\Db\Metadata\Object\ConstraintObject;
 
 
 class DB extends Metadata
