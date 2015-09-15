@@ -4,17 +4,16 @@
 <div class="merchant_contentbox">
 
 
-<?php $this->placeholder('test')->set('sdfsdfsd'); ?>
-
 <h4 class="text-center"><?php echo $this->translate('Welcome to Easypay Merchant Center !'); ?></h4>
 
 <ul class="list-group">
   <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Totle Income:'); ?></label> <?php echo $this->currencyFormat($this->TotleIncome,'RMB', null, 'zh_cn'); ?></li>
-  <li class="list-group-item list-group-item-info"><label><?php echo $this->translate('Free Income:'); ?></label> <?php echo $this->currencyFormat($this->FreeIncome,'RMB', null, 'zh_cn'); ?></li>
+  <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Totle Cost:'); ?></label> <?php echo $this->currencyFormat($this->TotleCost,'RMB', null, 'zh_cn'); ?> ( <label><?php echo $this->translate('Cost Percent:').' '.($this->CostPercent*100).'%'; ?></label> )</li>
+  <li class="list-group-item list-group-item-info"><label><?php echo $this->translate('Free Income:'); ?></label> <?php echo $this->currencyFormat($this->FreeIncome,'RMB', null, 'zh_cn'); ?>  ( <label><?php echo $this->translate('Settlement Period:').' T + '.$this->SettlementPeriod; ?></label> )</li>
   <li class="list-group-item list-group-item-warning"><label><?php echo $this->translate('Withdrawed Income:'); ?></label> <?php echo $this->currencyFormat($this->WithdrawedIncome,'RMB', null, 'zh_cn'); ?></li>
   <li class="list-group-item list-group-item-danger"><label><?php echo $this->translate('Effective Income:'); ?></label> <?php echo $this->currencyFormat($this->EffectiveIncome,'RMB', null, 'zh_cn'); ?></li>
   <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Trade:'); ?></label> <?php echo $this->TradePayed; ?> / <?php echo $this->TradeAll; ?> (<?php echo $this->translate('Paid / Total'); ?>)</li>
-  <li class="list-group-item list-group-item-info"><label><?php echo $this->translate('Withdraw Request:'); ?></label> <?php echo $this->WithdrawPayed; ?> / <?php echo $this->WithdrawAll; ?>  (<?php echo $this->translate('Paid / Total'); ?>)</li>
+  <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Withdraw Request:'); ?></label> <?php echo $this->WithdrawPayed; ?> / <?php echo $this->WithdrawAll; ?>  (<?php echo $this->translate('Paid / Total'); ?>)</li>
 </ul>
 
 </div>

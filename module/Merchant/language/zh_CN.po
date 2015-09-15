@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 12:08+0800\n"
-"PO-Revision-Date: 2015-09-15 12:09+0800\n"
+"POT-Creation-Date: 2015-09-15 15:38+0800\n"
+"PO-Revision-Date: 2015-09-15 15:38+0800\n"
 "Last-Translator: Evan Coury <me@evancoury.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -35,35 +35,47 @@ msgstr "提现单查询"
 msgid "Withdraw"
 msgstr "提现"
 
-#: ../view/merchant/index/index.phtml:9
+#: ../view/merchant/index/index.phtml:7
 msgid "Welcome to Easypay Merchant Center !"
 msgstr "欢迎来到Easypay商家中心"
 
-#: ../view/merchant/index/index.phtml:12
+#: ../view/merchant/index/index.phtml:10
 msgid "Totle Income:"
 msgstr "总收入："
 
-#: ../view/merchant/index/index.phtml:13
+#: ../view/merchant/index/index.phtml:11
+msgid "Totle Cost:"
+msgstr "总费用："
+
+#: ../view/merchant/index/index.phtml:11
+msgid "Cost Percent:"
+msgstr "手续费率："
+
+#: ../view/merchant/index/index.phtml:12
 msgid "Free Income:"
 msgstr "自由的收入："
 
-#: ../view/merchant/index/index.phtml:14
+#: ../view/merchant/index/index.phtml:12
+msgid "Settlement Period:"
+msgstr "结算周期："
+
+#: ../view/merchant/index/index.phtml:13
 msgid "Withdrawed Income:"
 msgstr "已提现总金额："
 
-#: ../view/merchant/index/index.phtml:15
+#: ../view/merchant/index/index.phtml:14
 msgid "Effective Income:"
 msgstr "实际有效的收效："
 
-#: ../view/merchant/index/index.phtml:16
+#: ../view/merchant/index/index.phtml:15
 msgid "Trade:"
 msgstr "交易单："
 
-#: ../view/merchant/index/index.phtml:16 ../view/merchant/index/index.phtml:17
+#: ../view/merchant/index/index.phtml:15 ../view/merchant/index/index.phtml:16
 msgid "Paid / Total"
 msgstr "已支付 / 总数"
 
-#: ../view/merchant/index/index.phtml:17
+#: ../view/merchant/index/index.phtml:16
 msgid "Withdraw Request:"
 msgstr "提现请求："
 
@@ -119,15 +131,15 @@ msgstr "银行卡"
 msgid "Amount"
 msgstr "金额"
 
-#: ../view/merchant/withdraw/add.phtml:19
+#: ../view/merchant/withdraw/add.phtml:20
 msgid "Submit"
 msgstr "提交"
 
-#: ../view/merchant/withdraw/add.phtml:26
+#: ../view/merchant/withdraw/add.phtml:27
 msgid "You can withdraw at most"
 msgstr "你最多可以提现"
 
-#: ../view/merchant/withdraw/add.phtml:32
+#: ../view/merchant/withdraw/add.phtml:33
 #, php-format
 msgid ""
 "You had submit a withdraw request successfully for %s ,<br>please wait till "
@@ -137,7 +149,7 @@ msgstr ""
 "你已经成功提交了一个金额为 %s 的提现请求，<br>请等待客服人员对它进行处理，"
 "<br>你也可以在%s 提现申请列表中 %s查看它的处理进度。"
 
-#: ../view/merchant/withdraw/add.phtml:37
+#: ../view/merchant/withdraw/add.phtml:38
 msgid "System Error !<br> Your Submited had failed !"
 msgstr "系统错误！<br> 你的提交的申请未能成功保存！"
 

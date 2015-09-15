@@ -6,7 +6,11 @@ class Report
     public $MerchantID;
     private $sl;
     
+    public $CostPercent = 0.003;
+    public $SettlementPeriod = 3;
+    
     public $TotleIncome = null;
+    public $TotleCost = null;
     public $FreeIncome = null;
     public $WithdrawedIncome = null;
     public $EffectiveIncome = null;
@@ -30,6 +34,7 @@ class Report
         // Read Data From DB.
         // Count total
         $TotleIncome = null;
+        $TotleCost = null;
         $FreeIncome = null;
         $WithdrawedIncome = null;
         $EffectiveIncome = null;
@@ -50,7 +55,7 @@ class Report
         );
         
         $rs_FreeIncome = $dbAdapter->query(
-            'SELECT sum(`price`) as sum FROM `trade` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1 AND `pay_time` < DATE_SUB(now(),INTERVAL 1 DAY)',
+            'SELECT sum(`price`) as sum FROM `trade` WHERE `merchant_id`='.$MerchantID.' AND `pay_status`=1 AND `pay_time` < DATE_SUB(now(),INTERVAL '.$this->SettlementPeriod.' DAY)',
             $dbAdapter::QUERY_MODE_EXECUTE
         );
         
@@ -128,17 +133,19 @@ class Report
         
         
         $this->TotleIncome=$TotleIncome;
-        $this->FreeIncome=$FreeIncome;
+        $this->TotleCost = $this->TotleIncome*$this->CostPercent;
+        $this->FreeIncome=$FreeIncome-$this->TotleCost; // Filter the Cost
         $this->WithdrawedIncome=$WithdrawedIncome;
-        $this->EffectiveIncome=$FreeIncome-$WithdrawedIncome;
+        $this->EffectiveIncome=$this->FreeIncome-$WithdrawedIncome;
         $this->TradeAll=$TradeAll;
         $this->TradePayed=$TradePayed;
         $this->WithdrawAll=$WithdrawAll;
         $this->WithdrawPayed=$WithdrawPayed;
-        $this->EnableMakeWithdraw = $EnableMakeWithdraw;
+        $this->EnableMakeWithdraw = $EnableMakeWithdraw-$this->TotleCost;
         
         return array(
             'TotleIncome'=>$this->TotleIncome,
+            'TotleCost'=>$this->TotleCost,
             'FreeIncome'=>$this->FreeIncome,
             'WithdrawedIncome'=>$this->WithdrawedIncome,
             'EffectiveIncome'=>$this->EffectiveIncome,
@@ -147,6 +154,8 @@ class Report
             'WithdrawAll'=>$this->WithdrawAll,
             'WithdrawPayed'=>$this->WithdrawPayed,
             'EnableMakeWithdraw'=>$this->EnableMakeWithdraw,
+            'CostPercent'=>$this->CostPercent,
+            'SettlementPeriod'=>$this->SettlementPeriod,
         );
         
     }

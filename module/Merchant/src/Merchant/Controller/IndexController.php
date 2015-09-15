@@ -19,7 +19,6 @@ class IndexController extends BaseController
     {
         $this->appendTitle($this->translate('Merchant workbench'));
         
-        
         // Load Report.
         $report = new Report($this->getServiceLocator());
         $report_array = $report->load();

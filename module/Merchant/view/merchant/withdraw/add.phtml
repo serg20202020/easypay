@@ -13,8 +13,9 @@
     $form->get('withdraw_type')->setValueOptions($withdraw_type_ValueOption);
     $form->get('price')->setLabel($this->translate('Amount'))->setAttributes(array(
         'min'  => '100',
-        'max'  => $form->get('price')->getValue(),
+        'max'  => floor($form->get('price')->getValue()),
     ));
+    $form->get('price')->setValue( floor($form->get('price')->getValue()));
     $form->get('submit')->setAttributes(array(
         'value' => $this->translate('Submit'),
         'id' => 'submitbutton',
