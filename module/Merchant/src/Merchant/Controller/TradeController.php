@@ -27,6 +27,8 @@ class TradeController extends BaseController
         $select = new \Zend\Db\Sql\Select();
         $select->from('trade')->where(array(
             'merchant_id'=>$this->getMerchantId()
+        ))->order(array(
+            'create_time'=>'desc',
         ));
         
         

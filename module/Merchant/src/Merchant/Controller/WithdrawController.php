@@ -24,6 +24,8 @@ class WithdrawController extends BaseController
         $select = new \Zend\Db\Sql\Select();
         $select->from('withdraw')->where(array(
             'merchant_id'=>$this->getMerchantId()
+        ))->order(array(
+            'create_time'=>'desc',
         ));
         
         
