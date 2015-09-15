@@ -55,6 +55,7 @@ class WithdrawController extends BaseController
         $vars['report'] = $withdraw->report;
         
         $request = $this->getRequest();
+        $vars['is_post'] = $request->isPost();
         if ($request->isPost()) {
         
             $post_data = $request->getPost();
@@ -71,7 +72,17 @@ class WithdrawController extends BaseController
                 $now_time = $make_time();
                 $withdraw->create_time = $now_time;
                 
-                $withdraw->save();
+                try {
+                    
+                    $r_int = $withdraw->save();
+                    $vars['status'] = true;
+                    
+                } catch (Exception $e) {
+                    
+                    $vars['status'] = false;
+                    
+                }
+                
             }
         }
         

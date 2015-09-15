@@ -84,14 +84,16 @@ abstract class DBModel
         if ($rs->count() > 0){
             
             // There is a recornd, update it
-            $this->tableGateway->update($data,array($this->id_column=>$this->id_value));
+            $return = $this->tableGateway->update($data,array($this->id_column=>$this->id_value));
             
         }else{
             
             // No record, insert one
-            $this->tableGateway->insert($data);
+            $return = $this->tableGateway->insert($data);
             
         }
+        
+        return $return;
     }
 }
 

@@ -2,10 +2,7 @@
 
 <div class="merchant_contentbox">
 
-    <h4 class="text-center"><?php echo $this->translate('Make an Withdraw.');?></h4>
-    
-    
-    <P class="bg-warning" style="padding: 20px; font-size:medium;"><?php echo $this->translate('You can withdraw at most');?> <span style="font-weight: bold; font-style: italic;"><?php echo $this->currencyFormat($report->EnableMakeWithdraw,'RMB', null, 'zh_cn'); ?></span></P>
+    <h3 class="text-center"><?php echo $this->translate('Make an Withdraw.');?></h3>
     
     <?php
     $form = $this->form;
@@ -19,8 +16,28 @@
         'id' => 'submitbutton',
     ));
     $form->prepare();
+    ?>
+
+    
+    <P class="bg-warning text-center" style="padding: 20px; font-size:medium;"><span class="glyphicon glyphicon-alert" aria-hidden="true" style="color: Orange; font-size: xx-large;"></span> <?php echo $this->translate('You can withdraw at most');?> <span style="font-weight: bold; font-style: italic;"><?php echo $this->currencyFormat($report->EnableMakeWithdraw,'RMB', null, 'zh_cn'); ?></span></P>
+    
+    <?php
+    if ($this->is_post):
+        if ($this->status):
+    ?>
+            <p class="bg-success text-center" style="padding: 10px; font-size:medium;"> <span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: Green; font-size: xx-large;"></span><br><?php echo sprintf($this->translate('You had submit a withdraw request successfully for %s ,<br>please wait till the customer service staff proccessed it,<br>you can also check the progress status in %s Withdraw Request List %s'),$this->currencyFormat($form->get('price')->getValue(),'RMB', null, 'zh_cn'),'<a href="'.$this->url('merchant/withdraw_paginator').'">','</a>');?></p>
+    
+    <?php 
+        else:
+    ?>
+            <p class="bg-success text-center" style="padding: 10px; font-size:medium;"> <span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: Red; font-size: xx-large;"></span><br><?php echo $this->translate('System Error !<br> Your Submited had failed !'); ?></p>
+    <?php 
+        endif;
+    endif;
+    ?>
     
     
+    <?php
     echo $this->form()->openTag($form->setAttribute('class','form-horizontal'));
     ?>
     
