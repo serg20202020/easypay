@@ -1,29 +1,107 @@
 <?php echo $this->menu; ?>
 
-<h4><?php echo $this->translate('Edit a Withdraw.');?></h4>
+<?php 
+$GetMerchantName = $this->sl->get('GetMerchantNameByMerchantId');
+?>
+
+<h3><?php echo $this->translate('Editing A Withdraw');?></h3>
 <?php
 $form = $this->form;
+
 $form->get('withdraw_interface_trade_id')->setLabel($this->translate('Payed Trade Id'));
-$form->get('pay_status')->setLabel($this->translate('Pay Status'));
+
+$form->get('pay_status')->setLabel($this->translate('Pay Progress'));
+$pay_status_ValueOptions = $form->get('pay_status')->getValueOptions();
+$pay_status_ValueOptions[0] = $this->translate('No Remittanced');
+$pay_status_ValueOptions[1] = $this->translate('Remittanced');
+$form->get('pay_status')->setValueOptions($pay_status_ValueOptions);
+
 $form->get('submit')->setAttributes(array(
     'value' => $this->translate('Save'),
     'id' => 'submitbutton',
 ));
+
+$form->setAttribute('class','form-horizontal');
 $form->prepare();
 
-
-echo $this->form()->openTag($form);
 ?>
 
-<div>商家名称:<?php echo $this->withdraw->name; ?></div>
-<div>商家支付宝：<?php echo $this->merchant->alipay_account; ?></div>
-<div>商家银行帐号：<?php echo $this->merchant->bank_type.' '.$this->merchant->bank_account_name.' '.$this->merchant->bank_account_card; ?> </div>
-<div>提现方式:<?php echo $this->withdraw->withdraw_type; ?></div>
-<div>提现金额:<?php echo $this->withdraw->price; ?></div>
-<div>申请时间:<?php echo $this->withdraw->create_time; ?></div>
+    <table class="table table-hover table-bordered">
+        <tbody>
+            <tr>
+                <th><?php echo $this->translate('Merchant Name');?></th>
+                <td><?php echo $GetMerchantName($this->merchant->id); ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Merchant\'s Alipay Account');?></th>
+                <td><?php echo $this->merchant->alipay_account; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Merchant\'s Bank Account');?></th>
+                <td><?php echo $this->translate('Bank Name:').$this->merchant->bank_type.'<br>'.$this->translate('Account Name:').$this->merchant->bank_account_name.'<br>'.$this->translate('Account/Card Number:').$this->merchant->bank_account_card; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Withdraw Method');?></th>
+                <td><?php
 
-<div><?php if (!empty($this->saved) && $this->saved === true) echo $this->translate('Saved !'); ?></div>
-<div><?php echo $this->formRow($form->get('withdraw_interface_trade_id')); ?></div>
-<div><?php echo $this->formRow($form->get('pay_status')); ?></div>
-<div><?php echo $this->formSubmit($form->get('submit')); ?></div>
-<?php echo $this->form()->closeTag(); ?>
+                switch ($this->withdraw->withdraw_type) {
+                    case \Merchant\Model\Withdraw::WITHDRAW_TYPE_ALIPAY:
+                        echo $this->translate('Alipay');
+                    break;
+                    case \Merchant\Model\Withdraw::WITHDRAW_TYPE_BANK:
+                        echo $this->translate('BandCard');
+                    break;
+                }
+                ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Withdraw Amount');?></th>
+                <td><?php echo $this->currencyFormat($this->withdraw->price,'RMB', null, 'zh_cn'); ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Apply Time');?></th>
+                <td><?php echo $this->withdraw->create_time; ?></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <P class="bg-primary text-center" style="padding: 10px; font-size:medium;"><span class="glyphicon glyphicon-random" aria-hidden="true"></span>&nbsp;&nbsp;<?php echo $this->translate('According to the infomations above, Remittance money to the merchant\' account, then fill in the remittancing trade number below.');?></P>
+
+    <?php
+    if ($this->is_post):
+        if ($this->status):
+    ?>
+            <p class="bg-success text-center" style="padding: 10px; font-size:medium;"> <span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: Green; font-size: xx-large;"></span><br><?php echo $this->translate('Data Save Successfully !');?></p>
+    
+    <?php 
+        else:
+    ?>
+            <p class="bg-success text-center" style="padding: 10px; font-size:medium;"> <span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: Red; font-size: xx-large;"></span><br><?php echo $this->translate('System Error !<br> Your Submited had failed !'); ?></p>
+    <?php 
+        endif;
+    endif;
+    ?>
+    
+    <?php echo $this->form()->openTag($form); ?>
+    
+        <div class="form-group">
+            <?php echo $this->formlabel($form->get('withdraw_interface_trade_id')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+            <div class="col-sm-9 col-lg-10">
+                <?php echo $this->formtext($form->get('withdraw_interface_trade_id')->setAttribute('class','form-control')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formlabel($form->get('pay_status')->setLabelAttributes(array('class' => 'col-sm-3 col-lg-2 control-label'))) ?>
+            <div class="col-sm-9 col-lg-10">
+                <?php echo $this->formradio($form->get('pay_status')->setAttribute('class','form-control')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9 col-lg-offset-2 col-lg-10">
+            <?php echo $this->formSubmit($form->get('submit')->setAttributes(array(
+                'class' => 'form-control btn btn-default'
+            ))); ?>
+            </div>
+        </div>
+
+    <?php echo $this->form()->closeTag(); ?>

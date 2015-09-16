@@ -20,7 +20,24 @@ class IndexController extends BaseController
 {
     public function indexAction()
     {
-        $view_page = new ViewModel();
+        
+        $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $rs = $dbAdapter->query(
+            'SELECT count(*) as count FROM `withdraw` WHERE `pay_status`=0',
+            $dbAdapter::QUERY_MODE_EXECUTE
+        );
+        
+        $count = 0;
+        
+        if ($rs->count() > 0){
+            $row = $rs->current();
+            $count = $row['count'];
+        }
+        
+        
+        $view_page = new ViewModel(array(
+            'count'=>$count
+        ));
         $view_page = $this->setChildViews($view_page);
         
         return $view_page;
@@ -66,8 +83,10 @@ class IndexController extends BaseController
         
         $vars['withdraw'] = $withdraw;
         $vars['merchant'] = new Setting($this->getServiceLocator(),$withdraw->merchant_id);
+        $vars['sl']       = $this->serviceLocator;
         
         $request = $this->getRequest();
+        $vars['is_post'] = $request->isPost();
         if ($request->isPost()) {
         
             $post_data = $request->getPost();
@@ -83,7 +102,7 @@ class IndexController extends BaseController
         
                 $withdraw->save();
                 
-                $vars['saved'] = true;
+                $vars['status'] = true;
             }
         }
         

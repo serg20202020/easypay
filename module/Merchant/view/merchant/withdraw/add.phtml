@@ -6,6 +6,9 @@
     
     <?php
     $form = $this->form;
+    
+    $data_object = $form->getObject();
+    
     $form->get('withdraw_type')->setLabel($this->translate('Withdraw Method'));
     $withdraw_type_ValueOption = $form->get('withdraw_type')->getValueOptions();
     $withdraw_type_ValueOption[\Merchant\Model\Withdraw::WITHDRAW_TYPE_ALIPAY] = $this->translate('Alipay');
@@ -13,9 +16,9 @@
     $form->get('withdraw_type')->setValueOptions($withdraw_type_ValueOption);
     $form->get('price')->setLabel($this->translate('Amount'))->setAttributes(array(
         'min'  => '100',
-        'max'  => floor($form->get('price')->getValue()),
+        'max'  => floor($data_object->report->EnableMakeWithdraw),
     ));
-    $form->get('price')->setValue( floor($form->get('price')->getValue()));
+    
     $form->get('submit')->setAttributes(array(
         'value' => $this->translate('Submit'),
         'id' => 'submitbutton',
@@ -43,6 +46,8 @@
     
     
     <?php
+    $form->get('price')->setValue( floor($data_object->report->EnableMakeWithdraw));
+    
     echo $this->form()->openTag($form->setAttribute('class','form-horizontal'));
     ?>
     

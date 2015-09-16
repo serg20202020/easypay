@@ -36,12 +36,21 @@ $GetMerchantName = $this->sl->get('GetMerchantNameByMerchantId');
             <td><?php echo $item['id']; ?></td>
             <td><?php echo $GetMerchantName($item['merchant_id']); ?></td>
             <td><?php echo $item['create_time']; ?></td>
-            <td><?php echo $item['withdraw_type']; ?></td>
+            <td><?php
+                switch ($item['withdraw_type']) {
+                    case \Merchant\Model\Withdraw::WITHDRAW_TYPE_ALIPAY:
+                        echo $this->translate('Alipay');
+                    break;
+                    case \Merchant\Model\Withdraw::WITHDRAW_TYPE_BANK:
+                        echo $this->translate('BandCard');
+                    break;
+                }
+                ?></td>
             <td><?php echo $item['price']; ?></td>
             <td><?php if ($item['withdraw_interface_trade_id']) echo $item['withdraw_interface_trade_id'];else echo 'N/A'; ?></td>
             <td><?php if ($item['pay_time']) echo $item['pay_time'];else echo 'N/A'; ?></td>
             <td><?php if ($item['pay_status']) echo '<span style="color:green;">已处理</span>'; else echo '<span style="color:red;">未处理</span>'; ?></td>
-            <td><a href="<?php echo $this->url('workbench/withdraw_edit',array('withdraw_id'=>$item['id'])); ?>">处理</a></td>
+            <td><a target="_black" href="<?php echo $this->url('workbench/withdraw_edit',array('withdraw_id'=>$item['id'])); ?>">处理</a></td>
           </tr>
         <?php endforeach; ?>
         </tbody>
