@@ -14,13 +14,10 @@ use Install\Form\InstallForm;
 use Zend\Db\Adapter\Exception\RuntimeException as AdapterRuntimeException;
 use Install\Model\DB;
 
-use Zend\Db\Sql\Ddl;
-use Zend\Db\Sql\Ddl\Column;
-use Zend\Db\Sql\Ddl\Constraint;
+
 use Zend\Db\Sql\Sql;
 
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\RowGateway\RowGateway;
 
 
 class IndexController extends AclController
@@ -68,6 +65,7 @@ class IndexController extends AclController
 
     public function testAction()
     {
+        /*
         $adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $metadata = new \Zend\Db\Metadata\Metadata($adapter);
         $sql = new Sql($adapter);
@@ -85,7 +83,7 @@ class IndexController extends AclController
         
         echo $MerchantID.'============';
         
-        /*
+        
         $tablenames = $metadata->getTableNames();
         
         if (in_array($test_table_name, $tablenames)){

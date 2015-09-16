@@ -6,7 +6,6 @@ use Cashier\Model\Alipay\AlipaySubmit;
 use Cashier\Model\Alipay\AlipayNotify;
 use Setting\Model\PaymentInterface;
 use Cashier\Model\Log;
-use Cashier\Model\Cashier\Model;
 
 /**
  * PayGatewayController
