@@ -33,12 +33,8 @@ $form->prepare();
                 <td><?php echo $GetMerchantName($this->merchant->id); ?></td>
             </tr>
             <tr>
-                <th><?php echo $this->translate('Merchant\'s Alipay Account');?></th>
-                <td><?php echo $this->merchant->alipay_account; ?></td>
-            </tr>
-            <tr>
-                <th><?php echo $this->translate('Merchant\'s Bank Account');?></th>
-                <td><?php echo $this->translate('Bank Name:').$this->merchant->bank_type.'<br>'.$this->translate('Account Name:').$this->merchant->bank_account_name.'<br>'.$this->translate('Account/Card Number:').$this->merchant->bank_account_card; ?></td>
+                <th><?php echo $this->translate('Withdraw Amount');?></th>
+                <td><?php echo $this->currencyFormat($this->withdraw->price,'RMB', null, 'zh_cn'); ?></td>
             </tr>
             <tr>
                 <th><?php echo $this->translate('Withdraw Method');?></th>
@@ -55,12 +51,36 @@ $form->prepare();
                 ?></td>
             </tr>
             <tr>
-                <th><?php echo $this->translate('Withdraw Amount');?></th>
-                <td><?php echo $this->currencyFormat($this->withdraw->price,'RMB', null, 'zh_cn'); ?></td>
-            </tr>
-            <tr>
                 <th><?php echo $this->translate('Apply Time');?></th>
                 <td><?php echo $this->withdraw->create_time; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Merchant Report');?></th>
+                <td>
+                    <ul class="list-group">
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Totle Income:'); ?></label> <?php echo $this->currencyFormat($this->withdraw->report->TotleIncome,'RMB', null, 'zh_cn'); ?></li>
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Totle Cost:'); ?></label> <?php echo $this->currencyFormat($this->withdraw->report->TotleCost,'RMB', null, 'zh_cn'); ?> ( <label><?php echo $this->translate('Cost Percent:').' '.($this->withdraw->report->CostPercent*100).'%'; ?></label> )</li>
+                      <li class="list-group-item list-group-item-info"><label><?php echo $this->translate('Free Income:'); ?></label> <?php echo $this->currencyFormat($this->withdraw->report->FreeIncome,'RMB', null, 'zh_cn'); ?>  ( <label><?php echo $this->translate('Settlement Period:').' T + '.$this->withdraw->report->SettlementPeriod; ?></label> )</li>
+                      <li class="list-group-item list-group-item-warning"><label><?php echo $this->translate('Withdrawed Income:'); ?></label> <?php echo $this->currencyFormat($this->withdraw->report->WithdrawedIncome,'RMB', null, 'zh_cn'); ?></li>
+                      <li class="list-group-item list-group-item-danger"><label><?php echo $this->translate('Effective Income:'); ?></label> <?php echo $this->currencyFormat($this->withdraw->report->EffectiveIncome,'RMB', null, 'zh_cn'); ?></li>
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Trade:'); ?></label> <?php echo $this->withdraw->report->TradePayed; ?> / <?php echo $this->withdraw->report->TradeAll; ?> (<?php echo $this->translate('Paid / Total'); ?>)</li>
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Withdraw Request:'); ?></label> <?php echo $this->withdraw->report->WithdrawPayed; ?> / <?php echo $this->withdraw->report->WithdrawAll; ?>  (<?php echo $this->translate('Paid / Total'); ?>)</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Merchant\'s Alipay Account');?></th>
+                <td><?php echo $this->merchant->alipay_account; ?></td>
+            </tr>
+            <tr>
+                <th><?php echo $this->translate('Merchant\'s Bank Account');?></th>
+                <td>
+                    <ul class="list-group">
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Bank Name:');?></label> <?php echo $this->merchant->bank_type; ?></li>
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Account Name:');?></label> <?php echo $this->merchant->bank_account_name; ?></li>
+                      <li class="list-group-item list-group-item-success"><label><?php echo $this->translate('Account/Card Number:');?></label> <?php echo $this->merchant->bank_account_card; ?></li>
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>

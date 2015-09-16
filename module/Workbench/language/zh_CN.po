@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-16 17:31+0800\n"
-"PO-Revision-Date: 2015-09-16 17:31+0800\n"
+"POT-Creation-Date: 2015-09-16 17:44+0800\n"
+"PO-Revision-Date: 2015-09-16 17:44+0800\n"
 "Last-Translator: Evan Coury <me@evancoury.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -29,12 +29,12 @@ msgid "There are %s whithdraw apply need to solve !"
 msgstr "有 %s 个提现申请需要马上处理！"
 
 #: ../view/workbench/index/withdraw.phtml:42
-#: ../view/workbench/index/withdrawedit.phtml:49
+#: ../view/workbench/index/withdrawedit.phtml:45
 msgid "Alipay"
 msgstr "支付宝"
 
 #: ../view/workbench/index/withdraw.phtml:45
-#: ../view/workbench/index/withdrawedit.phtml:52
+#: ../view/workbench/index/withdrawedit.phtml:48
 msgid "BandCard"
 msgstr "银行卡"
 
@@ -67,49 +67,94 @@ msgid "Merchant Name"
 msgstr "商家名称"
 
 #: ../view/workbench/index/withdrawedit.phtml:36
-msgid "Merchant's Alipay Account"
-msgstr "商家支付宝帐号"
-
-#: ../view/workbench/index/withdrawedit.phtml:40
-msgid "Merchant's Bank Account"
-msgstr "商家银行帐号"
-
-#: ../view/workbench/index/withdrawedit.phtml:41
-msgid "Bank Name:"
-msgstr "银行名称："
-
-#: ../view/workbench/index/withdrawedit.phtml:41
-msgid "Account Name:"
-msgstr "帐号名："
-
-#: ../view/workbench/index/withdrawedit.phtml:41
-msgid "Account/Card Number:"
-msgstr "帐号/卡号："
-
-#: ../view/workbench/index/withdrawedit.phtml:44
-msgid "Withdraw Method"
-msgstr "提现方式"
-
-#: ../view/workbench/index/withdrawedit.phtml:58
 msgid "Withdraw Amount"
 msgstr "提现金额"
 
-#: ../view/workbench/index/withdrawedit.phtml:62
+#: ../view/workbench/index/withdrawedit.phtml:40
+msgid "Withdraw Method"
+msgstr "提现方式"
+
+#: ../view/workbench/index/withdrawedit.phtml:54
 msgid "Apply Time"
 msgstr "申请时间"
 
-#: ../view/workbench/index/withdrawedit.phtml:68
+#: ../view/workbench/index/withdrawedit.phtml:58
+msgid "Merchant Report"
+msgstr "商家财务报表"
+
+#: ../view/workbench/index/withdrawedit.phtml:61
+msgid "Totle Income:"
+msgstr "总收入："
+
+#: ../view/workbench/index/withdrawedit.phtml:62
+msgid "Totle Cost:"
+msgstr "总费用："
+
+#: ../view/workbench/index/withdrawedit.phtml:62
+msgid "Cost Percent:"
+msgstr "手续费率："
+
+#: ../view/workbench/index/withdrawedit.phtml:63
+msgid "Free Income:"
+msgstr "自由的收入："
+
+#: ../view/workbench/index/withdrawedit.phtml:63
+msgid "Settlement Period:"
+msgstr "结算周期："
+
+#: ../view/workbench/index/withdrawedit.phtml:64
+msgid "Withdrawed Income:"
+msgstr "已提现总金额："
+
+#: ../view/workbench/index/withdrawedit.phtml:65
+msgid "Effective Income:"
+msgstr "实际有效的收入："
+
+#: ../view/workbench/index/withdrawedit.phtml:66
+msgid "Trade:"
+msgstr "交易单："
+
+#: ../view/workbench/index/withdrawedit.phtml:66
+#: ../view/workbench/index/withdrawedit.phtml:67
+msgid "Paid / Total"
+msgstr "已支付 / 总数"
+
+#: ../view/workbench/index/withdrawedit.phtml:67
+msgid "Withdraw Request:"
+msgstr "提现请求："
+
+#: ../view/workbench/index/withdrawedit.phtml:72
+msgid "Merchant's Alipay Account"
+msgstr "商家支付宝帐号"
+
+#: ../view/workbench/index/withdrawedit.phtml:76
+msgid "Merchant's Bank Account"
+msgstr "商家银行帐号"
+
+#: ../view/workbench/index/withdrawedit.phtml:77
+msgid "Bank Name:"
+msgstr "银行名称："
+
+#: ../view/workbench/index/withdrawedit.phtml:77
+msgid "Account Name:"
+msgstr "帐号名："
+
+#: ../view/workbench/index/withdrawedit.phtml:77
+msgid "Account/Card Number:"
+msgstr "帐号/卡号："
+
+#: ../view/workbench/index/withdrawedit.phtml:82
 msgid ""
 "According to the infomations above, Remittance money to the merchant' "
 "account, then fill in the remittancing trade number below."
 msgstr ""
 "按照上面的信息，转账给商家的帐号，然后把转账交易号填写到下面的表单中。"
 
-#: ../view/workbench/index/withdrawedit.phtml:74
+#: ../view/workbench/index/withdrawedit.phtml:88
 msgid "Data Save Successfully !"
 msgstr "数据保存成功！"
 
-#: ../view/workbench/index/withdrawedit.phtml:79
+#: ../view/workbench/index/withdrawedit.phtml:93
 msgid "System Error !<br> Your Submited had failed !"
 msgstr "系统错误！<br> 你的提交的申请未能成功保存！"
 
@@ -139,36 +184,6 @@ msgstr "系统错误！<br> 你的提交的申请未能成功保存！"
 
 #~ msgid "Welcome to Easypay Merchant Center !"
 #~ msgstr "欢迎来到Easypay商家中心"
-
-#~ msgid "Totle Income:"
-#~ msgstr "总收入："
-
-#~ msgid "Totle Cost:"
-#~ msgstr "总费用："
-
-#~ msgid "Cost Percent:"
-#~ msgstr "手续费率："
-
-#~ msgid "Free Income:"
-#~ msgstr "自由的收入："
-
-#~ msgid "Settlement Period:"
-#~ msgstr "结算周期："
-
-#~ msgid "Withdrawed Income:"
-#~ msgstr "已提现总金额："
-
-#~ msgid "Effective Income:"
-#~ msgstr "实际有效的收入："
-
-#~ msgid "Trade:"
-#~ msgstr "交易单："
-
-#~ msgid "Paid / Total"
-#~ msgstr "已支付 / 总数"
-
-#~ msgid "Withdraw Request:"
-#~ msgstr "提现请求："
 
 #~ msgid "Setting up the merchant info."
 #~ msgstr "设置商家信息"
