@@ -5,5 +5,5 @@ $active = function( $test_RouteName ){
 ?>
 <ul class="nav nav-tabs">
   <li role="presentation"<?php $active('workbench'); ?>><a href="<?php echo $this->url('workbench') ?>">工作台首页</a></li>
-  <li role="presentation"<?php $active('workbench/withdraw_paginator'); ?>><a href="<?php echo $this->url('workbench/withdraw_paginator') ?>">提现单管理</a></li>
+  <li role="presentation"<?php $active('workbench/withdraw_paginator'); $active('workbench/withdraw_edit'); ?>><a href="<?php echo $this->url('workbench/withdraw_paginator') ?>">提现单管理</a></li>
 </ul>
