@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-05 22:17-0700\n"
-"PO-Revision-Date: 2012-09-08 13:15+0800\n"
+"POT-Creation-Date: 2015-09-17 15:38+0800\n"
+"PO-Revision-Date: 2015-09-17 15:41+0800\n"
 "Last-Translator: Evan Coury <me@evancoury.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -12,26 +12,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: translate\n"
 "X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.1\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/layout/layout.phtml:6 ../view/layout/layout.phtml:33
-msgid "Skeleton Application"
-msgstr "框架应用"
-
-#: ../view/layout/layout.phtml:36
-msgid "Home"
-msgstr "主页"
-
-#: ../view/layout/layout.phtml:50
-msgid "All rights reserved."
-msgstr "All rights reserved."
-
-#: ../view/application/index/index.phtml:2
+#: ../view/application/index/index.phtml:7
 #, php-format
 msgid "Welcome to %sZend Framework 2%s"
 msgstr "欢迎使用%sZend Framework 2%s"
 
-#: ../view/application/index/index.phtml:3
+#: ../view/application/index/index.phtml:8
 #, php-format
 msgid ""
 "Congratulations! You have successfully installed the %sZF2 Skeleton "
@@ -42,15 +31,15 @@ msgstr ""
 "恭喜！您已经成功安装了%sZF2 Skeleton Application%s。您现在运行的Zend "
 "Framework的版本为%s。这个框架应用可以用作您创建自己的ZF2应用的起点。"
 
-#: ../view/application/index/index.phtml:4
+#: ../view/application/index/index.phtml:9
 msgid "Fork Zend Framework 2 on GitHub"
 msgstr "在GitHub中获取Zend Framework 2到您的应用"
 
-#: ../view/application/index/index.phtml:10
+#: ../view/application/index/index.phtml:17
 msgid "Follow Development"
 msgstr "关注开发"
 
-#: ../view/application/index/index.phtml:11
+#: ../view/application/index/index.phtml:20
 #, php-format
 msgid ""
 "Zend Framework 2 is under active development. If you are interested in "
@@ -63,15 +52,15 @@ msgstr ""
 "站有一个专门的ZF2入口，从这个入口可以进入ZF2的%swiki%s, %sdev blog%s, "
 "%sissue tracker%s等。这些是关注我们最新开发的好资源！"
 
-#: ../view/application/index/index.phtml:12
+#: ../view/application/index/index.phtml:21
 msgid "ZF2 Development Portal"
 msgstr "ZF2 开发入口"
 
-#: ../view/application/index/index.phtml:16
+#: ../view/application/index/index.phtml:29
 msgid "Discover Modules"
 msgstr "探索模块"
 
-#: ../view/application/index/index.phtml:17
+#: ../view/application/index/index.phtml:32
 #, php-format
 msgid ""
 "The community is working on developing a community site to serve as a "
@@ -82,15 +71,15 @@ msgstr ""
 "社区正在开发一个能够存储和展示ZF2模块的功能。这个项目可以在%son GitHub%s找"
 "到。这个网站现在已经包含了许多ZF2可用的模块。"
 
-#: ../view/application/index/index.phtml:18
+#: ../view/application/index/index.phtml:33
 msgid "Explore ZF2 Modules"
 msgstr "浏览ZF2模块"
 
-#: ../view/application/index/index.phtml:22
+#: ../view/application/index/index.phtml:41
 msgid "Help &amp; Support"
 msgstr "帮助 &amp; 支持"
 
-#: ../view/application/index/index.phtml:23
+#: ../view/application/index/index.phtml:44
 #, php-format
 msgid ""
 "If you need any help or support while developing with ZF2, you may reach us "
@@ -98,42 +87,13 @@ msgid ""
 "feedback you may have regarding the beta releases. Alternatively, you may "
 "subscribe and post questions to the %smailing lists%s."
 msgstr ""
-"如果您需要一些关于ZF2开发的帮助和支持，可以通过IRC: %s#zftalk on Freenode"
-"%s。我们非常乐意收到您对于发布的公测版提问和反馈。或者，您也可以通"
-"过%smailing lists%s订阅并发布问题。"
+"如果您需要一些关于ZF2开发的帮助和支持，可以通过IRC: %s#zftalk on Freenode%s。"
+"我们非常乐意收到您对于发布的公测版提问和反馈。或者，您也可以通过%smailing "
+"lists%s订阅并发布问题。"
 
-#: ../view/application/index/index.phtml:24
+#: ../view/application/index/index.phtml:45
 msgid "Ping us on IRC"
 msgstr "在IRC上ping我们"
-
-#: ../view/error/index.phtml:1
-msgid "An error occurred"
-msgstr "发生错误"
-
-#: ../view/error/index.phtml:8
-msgid "Additional information"
-msgstr "附加信息"
-
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
-msgid "File"
-msgstr "文件"
-
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
-msgid "Message"
-msgstr "消息"
-
-#: ../view/error/index.phtml:19 ../view/error/index.phtml:43
-#: ../view/error/404.phtml:55
-msgid "Stack trace"
-msgstr "Stack trace"
-
-#: ../view/error/index.phtml:29
-msgid "Previous exceptions"
-msgstr "上一个异常"
-
-#: ../view/error/index.phtml:58
-msgid "No Exception available"
-msgstr "没有可用的Exception"
 
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
@@ -150,7 +110,7 @@ msgstr "所请求的控制器不能映射到已存在的控制器类"
 
 #: ../view/error/404.phtml:16
 msgid "The requested controller was not dispatchable."
-msgstr ""
+msgstr "被请求的控制器无法被分发请求。"
 
 #: ../view/error/404.phtml:19
 msgid "The requested URL could not be matched by routing."
@@ -169,6 +129,83 @@ msgstr "控制器"
 msgid "resolves to %s"
 msgstr "解决： %s"
 
-#: ../view/error/404.phtml:51
-msgid "Exception"
-msgstr "异常"
+#: ../view/error/404.phtml:53 ../view/error/index.phtml:16
+msgid "Additional information"
+msgstr "附加信息"
+
+#: ../view/error/404.phtml:56 ../view/error/404.phtml:81
+#: ../view/error/index.phtml:19 ../view/error/index.phtml:44
+msgid "File"
+msgstr "文件"
+
+#: ../view/error/404.phtml:60 ../view/error/404.phtml:85
+#: ../view/error/index.phtml:23 ../view/error/index.phtml:48
+msgid "Message"
+msgstr "消息"
+
+#: ../view/error/404.phtml:64 ../view/error/404.phtml:89
+#: ../view/error/index.phtml:27 ../view/error/index.phtml:52
+msgid "Stack trace"
+msgstr "Stack trace"
+
+#: ../view/error/404.phtml:75 ../view/error/index.phtml:38
+msgid "Previous exceptions"
+msgstr "上一个异常"
+
+#: ../view/error/404.phtml:109 ../view/error/index.phtml:72
+msgid "No Exception available"
+msgstr "没有可用的Exception"
+
+#: ../view/error/index.phtml:4
+msgid "You do not have permissions to do this !"
+msgstr "你没有权限执行此操作！"
+
+#: ../view/error/index.phtml:9
+msgid "An error occurred"
+msgstr "发生错误"
+
+#: ../view/layout/layout.phtml:6 ../view/layout/layout.phtml:46
+msgid "Easypay"
+msgstr "易支付"
+
+#: ../view/layout/layout.phtml:51
+msgid "Home"
+msgstr "主页"
+
+#: ../view/layout/layout.phtml:52
+msgid "Install"
+msgstr "安装"
+
+#: ../view/layout/layout.phtml:53
+msgid "Setting"
+msgstr "配置"
+
+#: ../view/layout/layout.phtml:54
+msgid "Cashier"
+msgstr "收银台"
+
+#: ../view/layout/layout.phtml:55
+msgid "Merchant"
+msgstr "商家"
+
+#: ../view/layout/layout.phtml:56
+msgid "Workbench"
+msgstr "工作台"
+
+#: ../view/layout/layout.phtml:57
+msgid "Auth"
+msgstr "认证"
+
+#: ../view/layout/layout.phtml:58
+msgid "Logout"
+msgstr "登出"
+
+#: ../view/layout/layout.phtml:69
+msgid "All rights reserved."
+msgstr "版权所有。"
+
+#~ msgid "Skeleton Application"
+#~ msgstr "框架应用"
+
+#~ msgid "Exception"
+#~ msgstr "异常"

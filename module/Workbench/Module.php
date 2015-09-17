@@ -43,7 +43,7 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         
-        $eventManager->attach('render', array($this, 'setLayoutTitle'));
+        //$eventManager->attach('render', array($this, 'setLayoutTitle'));
     }
     
     public function setLayoutTitle($e)

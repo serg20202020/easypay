@@ -47,6 +47,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        <?php if (empty($this->is_cashier_page)): ?>
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                         <li><a href="<?php echo $this->url('install') ?>"><?php echo $this->translate('Install') ?></a></li>
                         <li><a href="<?php echo $this->url('setting') ?>"><?php echo $this->translate('Setting') ?></a></li>
@@ -55,6 +56,7 @@
                         <li><a href="<?php echo $this->url('workbench') ?>"><?php echo $this->translate('Workbench') ?></a></li>
                         <li><a href="<?php echo $this->url('auth') ?>"><?php echo $this->translate('Auth') ?></a></li>
                         <li><a href="<?php echo $this->url('auth/logout') ?>"><?php echo $this->translate('Logout') ?></a></li>
+                        <?php endif; ?>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

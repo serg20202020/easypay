@@ -22,7 +22,11 @@ class IndexController extends BaseController
      */
     public function indexAction()
     {
+        
         if ($this->verifyRequest()){
+            
+            $this->appendTitle('收银台');
+            $this->layout()->setVariable('is_cashier_page', true);
             
             
             $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');

@@ -24,11 +24,14 @@ class PayGatewayController extends BaseController
     public function alipayAction()
     {
         
+        $this->appendTitle('收银台');
+        $this->layout()->setVariable('is_cashier_page', true);
+        
         /**
          * Get the trade info data.
          */
         @session_start();
-        print_r($_SESSION['paying_trade']);
+        //print_r($_SESSION['paying_trade']);
         $paying_trade = $_SESSION['paying_trade'];
         
         /**

@@ -1,23 +1,28 @@
-<p>You are going to pay ￥<span><?php echo $this->price; ?></span> to the merchant.</p>
+<p class="alert alert-success" style="padding: 20px; font-size: large;">
+    <span class="glyphicon glyphicon-yen" aria-hidden="true"></span>
+    <?php echo sprintf($this->translate('You are going to pay %s to the merchant.'),$this->currencyFormat($this->price,'RMB', null, 'zh_cn')); ?>
+</p>
 
 
-<h4>Please select the payment method:</h4>
+<h3><?php echo $this->translate('Please select the payment method:');?></h3>
 
 
+<div style="padding: 20px;">
+    <label><input type="radio" name="payment_method" value="alipay"<?php 
+    if (empty($this->selected_payment) || $this->selected_payment == 'alipay'){
+        echo ' checked';
+    }
+    ?>>&nbsp;&nbsp;<img src="/img/alipay.png" alt="<?php echo $this->translate('Alipay');?>"></label><br>
+    
+    <label><input type="radio" disabled name="payment_method" value="wechatpay"<?php 
+    if ($this->selected_payment == 'wxpay'){
+        echo ' checked';
+    }
+    ?>>&nbsp;&nbsp;<img src="/img/wechatpay.png" alt="<?php echo $this->translate('Wechatpay');?>">(<?php echo $this->translate('Comming soon !');?>)</label><br>
+    
+</div>
 
-<p><label><input type="radio" name="payment_method" value="alipay"<?php 
-if (empty($this->selected_payment) || $this->selected_payment == 'alipay'){
-    echo ' checked';
-}
-?>>Alipay(Suport BandCard Payment.)</label></p>
-<p><label><input type="radio" name="payment_method" value="wechatpay"<?php 
-if ($this->selected_payment == 'wxpay'){
-    echo ' checked';
-}
-?>>Wechatpay</label></p>
-
-
-<p><input type="button" id="pay_btn" value="Pay Now !"></p>
+<input class="form-control btn btn-primary" type="button" id="pay_btn" value="<?php echo $this->translate('Pay Now !');?>">
 
 
 <script type="text/javascript">

@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZendSkeletonApplication\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-17 17:32+0800\n"
+"PO-Revision-Date: 2015-09-17 17:33+0800\n"
+"Last-Translator: Evan Coury <me@evancoury.com>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.1\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../view/cashier/index/index.phtml:3
+#, php-format
+msgid "You are going to pay %s to the merchant."
+msgstr "你正在向商家支付 %s"
+
+#: ../view/cashier/index/index.phtml:7
+msgid "Please select the payment method:"
+msgstr "请选择支付方式："
+
+#: ../view/cashier/index/index.phtml:15
+msgid "Alipay"
+msgstr "支付宝"
+
+#: ../view/cashier/index/index.phtml:21
+msgid "Wechatpay"
+msgstr "微信支付"
+
+#: ../view/cashier/index/index.phtml:21
+msgid "Comming soon !"
+msgstr "未可用，即将开放！"
+
+#: ../view/cashier/index/index.phtml:25
+msgid "Pay Now !"
+msgstr "马上支付！"
+
+#: ../view/cashier/pay-gateway/alipay.phtml:1
+msgid "Redirecting to the Alipay gateway, Please wait ..."
+msgstr "正在跳转到支付宝网关，请稍候 。。。"
+
+#~ msgid "Merchant workbench"
+#~ msgstr "商家工作台"
+
+#~ msgid "Withdraw account setting"
+#~ msgstr "提现帐号设置"
+
+#~ msgid "Trade query"
+#~ msgstr "交易单查询"
+
+#~ msgid "Withdraw query"
+#~ msgstr "提现单查询"
+
+#~ msgid "Withdraw"
+#~ msgstr "提现"
+
+#~ msgid "Welcome to Easypay Merchant Center !"
+#~ msgstr "欢迎来到Easypay商家中心"
+
+#~ msgid "Totle Income:"
+#~ msgstr "总收入："
+
+#~ msgid "Totle Cost:"
+#~ msgstr "总费用："
+
+#~ msgid "Cost Percent:"
+#~ msgstr "手续费率："
+
+#~ msgid "Free Income:"
+#~ msgstr "自由的收入："
+
+#~ msgid "Settlement Period:"
+#~ msgstr "结算周期："
+
+#~ msgid "Withdrawed Income:"
+#~ msgstr "已提现总金额："
+
+#~ msgid "Effective Income:"
+#~ msgstr "实际有效的收入："
+
+#~ msgid "Trade:"
+#~ msgstr "交易单："
+
+#~ msgid "Paid / Total"
+#~ msgstr "已支付 / 总数"
+
+#~ msgid "Withdraw Request:"
+#~ msgstr "提现请求："
+
+#~ msgid "Setting up the merchant info."
+#~ msgstr "设置商家信息"
+
+#~ msgid "Alipay Account"
+#~ msgstr "支付宝帐号"
+
+#~ msgid "Bank Name"
+#~ msgstr "银行名称"
+
+#~ msgid "Bank Account Name"
+#~ msgstr "银行帐号名称"
+
+#~ msgid "Bank Account Card"
+#~ msgstr "银行卡号"
+
+#~ msgid "Save"
+#~ msgstr "保存"
+
+#~ msgid "Configuration save successfully !"
+#~ msgstr "配置信息已经成功保存！"
+
+#~ msgid "System Error !<br> Configuration saved had failed !"
+#~ msgstr "系统错误！<br>配置信息保存失败！"
+
+#~ msgid "Make an Withdraw."
+#~ msgstr "提交一个提现申请。"
+
+#~ msgid "Withdraw Method"
+#~ msgstr "提现方式"
+
+#~ msgid "BankCard"
+#~ msgstr "银行卡"
+
+#~ msgid "Amount"
+#~ msgstr "金额"
+
+#~ msgid "Submit"
+#~ msgstr "提交"
+
+#~ msgid "You can withdraw at most"
+#~ msgstr "你最多可以提现"
+
+#~ msgid "You had submit a withdraw request successfully for %s ,<br>please wait till the customer service staff proccessed it,<br>you can also check the progress status in %s Withdraw Request List %s"
+#~ msgstr "你已经成功提交了一个金额为 %s 的提现请求，<br>请等待客服人员对它进行处理，<br>你也可以在%s 提现申请列表中 %s查看它的处理进度。"
+
+#~ msgid "System Error !<br> Your Submited had failed !"
+#~ msgstr "系统错误！<br> 你的提交的申请未能成功保存！"
+
+#~ msgid "Installing The UserHub System"
+#~ msgstr "正在安装 UserHub 系统"
+
+#~ msgid "Database name has not spacify!"
+#~ msgstr "数据库名没有提供！"
+
+#~ msgid "Welcome to install UserHub"
+#~ msgstr "欢迎安装UserHub系统"
+
+#~ msgid "Server"
+#~ msgstr "服务器"
+
+#~ msgid "Username"
+#~ msgstr "用户名"
+
+#~ msgid "Password"
+#~ msgstr "密码"
+
+#~ msgid "Database"
+#~ msgstr "数据库"
+
+#~ msgid "Install Now !"
+#~ msgstr "马上安装！"
+
+#~ msgid "if it's not exsist, we will try to create one."
+#~ msgstr "如果它不存在，我们将会尝试新建一个。"
